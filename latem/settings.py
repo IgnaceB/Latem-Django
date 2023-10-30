@@ -32,7 +32,7 @@ else :
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if IS_HEROKU_APP :
-    DEBUG = False
+    DEBUG = True
 else :    
     DEBUG = True
 
