@@ -25,7 +25,10 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+if IS_HEROKU_APP :
+    SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+else : 
+    SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if IS_HEROKU_APP :
@@ -84,11 +87,19 @@ WSGI_APPLICATION = 'latem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+if IS_HEROKU_APP :
+
+    DATABASES = {
+            'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL')
+        )
+    }
+else : 
+    DATABASES = {
         'default': dj_database_url.config(
-        default=env('DB_URL')
-    )
-}
+        default=env('DATABASE_URL')
+        )
+    }
 
 
 # Password validation
