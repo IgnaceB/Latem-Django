@@ -1,54 +1,95 @@
-
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dating</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Main page Kwalsh</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                
-                <h1>My Dating App</h1>
+    <div class="wrapper">
+        <header>
+            <div class="logo" id="logo">
+                <img src="{% static 'assets/logo.png' %}">
+            </div>
+            <nav>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+
+
+            </svg>
+            <div id="menu">
+                <ul>
+                    <li>
+                        <a href="">Qui sommes-nous</a>
+                    </li>
+                    <li>
+                        <a href="">contact</a>
+                    </li>
+                    <li>
+                        <a href="">nos réalisations</a>
+                    </li>
+                </div>
+            </nav>
+        </header>
+        <section id="slider">
+            <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </div>
+        <div class="qui">
+            <h2>Bienvenue dans notre atelier</h2>
+        </div>
+    </section>
+    <section id="real">
+        <div class="real" id="esaclier">
+            <div class="slider">
+                <h3>escalier</h3>
+            </div>
+            <img src="{% static 'assets/escalier.png' %}">
+        </div>
+        <div class="real" id="meuble">
+            <div class="slider">
+                <h3>meuble</h3>
+            </div>  
+            <img src="{% static 'assets/meuble.png' %}">
+        </div>
+        <div class="real" id="mobilier">
+            <div class="slider">
+                <h3>mobilier</h3>
+            </div>
+            <img src="{% static 'assets/mobilier.png' %}">
+        </div>
+        <div class="real" id="barriere">
+            <div class="slider">
+                <h3>barriere</h3>
+            </div>
+            <img src="{% static 'assets/barriere.png' %}">
+        </div>
+        <div class="real" id="verriere">
+            <div class="slider">
+            <h3>verriere</h3>
+        </div>  
+            <img src="{% static 'assets/verriere.png' %}">
+            
+        </div>
+        <div class="real" id="plafond">
+            <div class="slider">
+            <h3>plafond</h3>
+        </div>
+            <img src="{% static 'assets/plafond.png' %}">
+            
+        </div>
+
         
-            </div>
-
-        </nav>
-    </header>
-    
-    <main>
-        <section class="hero">
-            <h1>Find Your Perfect Match</h1>
-            <p>Start discovering interesting people near you.</p>
-
-        </section>
-        
-        <section class="features">
-            <div class="feature">
-
-                <h2>Feature 1</h2>
-                <p>Description of Feature 1.</p>
-            </div>
-            <div class="feature">
-
-                <h2>Feature 2</h2>
-                <p>Description of Feature 2.</p>
-            </div>
-            <div class="feature">
-
-                <h2>Feature 3</h2>
-                <p>Description of Feature 3.</p>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; {{ year }} My Dating App</p>
-    </footer>
+    </section>
 </body>
+<footer>
+</footer>
+</div>  
 </html>
