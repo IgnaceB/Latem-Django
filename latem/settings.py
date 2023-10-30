@@ -36,7 +36,7 @@ if IS_HEROKU_APP :
 else :    
     DEBUG = True
 
-ALLOWED_HOSTS = ['latem-42c592f60c79.herokuapp.com/','localhost']
+ALLOWED_HOSTS = ['latem-42c592f60c79.herokuapp.com','localhost']
 
 
 # Application definition
