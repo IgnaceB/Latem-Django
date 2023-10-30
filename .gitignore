@@ -1,2 +1,4 @@
 .env
 workEnv/
+__pycache__/
+migrations/
