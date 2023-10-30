@@ -1,17 +1,17 @@
-# from django.shortcuts import render, redirect
-# from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse, HttpResponseServerError
-# from django.http import JsonResponse
-# from django.template import loader
-# from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse, HttpResponseServerError
+from django.http import JsonResponse
+from django.template import loader
+from django.contrib.auth import authenticate, login
 # from .forms import UserCreationForm
-# from django.contrib import messages
-# from django.urls import reverse
-# from django.views.decorators import gzip
-# from .serializer import UserSerializer
+from django.contrib import messages
+from django.urls import reverse
+from django.views.decorators import gzip
+
 # import cv2
-# import requests
-# import json
-# import time
+import requests
+import json
+import time
 
 # def login(request):
 # 	if request.method == 'POST':
@@ -93,3 +93,4 @@ def test(request) :
 	serializer = UserSerializer(data=data)
 	if serializer.is_valid() :
 		serializer.save()
+	return render(request, 'home.html')
