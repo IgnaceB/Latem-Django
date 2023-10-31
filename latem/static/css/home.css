@@ -1,130 +1,169 @@
 * {
-	 box-sizing: border-box;
+  box-sizing: border-box;
 }
- .wrapper {
-	 overflow: hidden;
-	 width: 100vw;
+
+.wrapper {
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
 }
- body {
-	 width: 100vw;
-	 height: auto;
-	 padding: 0;
-	 margin: 0;
-	 font-family: 'Poppins', sans-serif;
-	 background-color: white;
-	 overflow: hidden;
+
+body {
+  width: 100vw;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  overflow: hidden;
 }
- header {
-	 height: 45vw;
-	 width: 100%;
-	 padding: 10px;
-	 margin: 0;
-	 box-sizing: border-box;
-	 display: flex;
-	 justify-content: space-between;
-	 align-items: center;
+
+header {
+  height: 45vw;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
- header .logo {
-	 width: 100%;
-	 height: auto;
-	 text-align: center;
+
+header .logo {
+  width: 100%;
+  height: auto;
+  text-align: center;
 }
- header .logo img {
-	 max-width: 100%;
-	 max-height: 100px;
+
+header .logo img {
+  max-width: 100%;
+  max-height: 100px;
 }
- header nav {
-	 width: 50%;
-	 display: none;
-	 justify-content: flex-end;
-	 align-items: center;
-	 max-height: 100px;
+
+header nav {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  left: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  background: black;
+  width: 100%;
 }
- header nav svg {
-	 max-height: 10vw;
+
+header nav ul {
+  display: flex;
+  margin: 10px;
 }
- header nav #menu {
-	 display: none;
-	 position: absolute;
-	 height: 60%;
-	 margin-top: 100%;
-	 margin-right: -10px;
-	 padding: 10px;
-	 background: green;
-	 z-index: 4;
+
+header nav ul li {
+  width: 30%;
+  height: 5vh;
 }
- #slider {
-	 display: none;
-	 justify-content: flex-end;
+
+#slider {
+  display: none;
+  justify-content: flex-end;
 }
- #slider .arrow {
-	 width: 30px;
-	 margin: 0px;
-	 padding: 0;
-	 background-color: black;
-	 border-radius: 5px 0px 0px 5px;
+
+#slider .arrow {
+  width: 30px;
+  margin: 0px;
+  padding: 0;
+  background-color: black;
+  border-radius: 5px 0px 0px 5px;
 }
- #slider .arrow svg {
-	 height: 100%;
-	 color: white;
-	 width: 100%;
+
+#slider .arrow svg {
+  height: 100%;
+  color: white;
+  width: 100%;
 }
- #slider .qui {
-	 width: 100%;
-	 border: black solid 2px;
-	 margin-right: -30%;
-	 padding: 10px;
-	 display: flex;
-	 padding-right: 30%;
+
+#slider .qui {
+  width: 100%;
+  border: black solid 2px;
+  margin-right: -30%;
+  padding: 10px;
+  display: flex;
+  padding-right: 30%;
 }
- #slider .qui h2 {
-	 margin: 0;
-	 font-size: 15px;
+
+#slider .qui h2 {
+  margin: 0;
+  font-size: 15px;
 }
- #real {
-	 width: 100%;
-	 display: flex;
-	 flex-wrap: wrap;
-	 justify-content: center;
+
+.real {
+  width: 100%;
+  height: 100%;
 }
- #real .real {
-	 background-color: black;
-	 width: 45vw;
-	 margin: 5px;
-	 height: 45vw;
-	 display: flex;
-	 align-items: center;
-	 box-shadow: 1px 1px 3px #000 42;
-	 position: relative;
-	 overflow: hidden;
+
+.real img {
+  width: 100%;
+  height: 100%;
 }
- #real .real:hover .slider {
-	 top: 50vw;
+
+.real .slider {
+  width: auto;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
- #real .real img {
-	 width: 100%;
-	 height: 45vw;
+
+.real .slider h3 {
+  font-weight: 600;
+  text-align: center;
+  font-size: 16px;
+  margin: 0;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 30px;
 }
- #real .real .slider {
-	 width: 45vw;
-	 height: 25vw;
-	 top: 20vw;
-	 position: absolute;
-	 background: #000 c9;
-	 transition-property: top;
-	 transition-duration: 2s;
+
+footer {
+  height: 10vh;
+  width: 100vw;
 }
- #real .real .slider h3 {
-	 position: absolute;
-	 width: 45vw;
-	 color: white;
-	 font-weight: 900;
-	 text-align: center;
-	 font-size: 25px;
-	/* text-shadow: -1px 0 #aeabab, 0 1px #aeabab, 1px 0 #aeabab, 0 -1px #aeabab;
-	 */
-	 text-transform: uppercase;
-	 margin: 0;
-	 top: 8vw;
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
- 
+
+.carousel {
+  background: white;
+  height: 43vh;
+  margin-right: 3vw;
+  margin-left: 3vw;
+}
+
+.carousel-cell {
+  width: 66%;
+  height: 100%;
+  margin-right: 20px;
+  background: white;
+  border-radius: 5px;
+  counter-increment: carousel-cell;
+}
+
+.carousel flickity-enabled is-draggable {
+  height: 43vh;
+  margin-right: 3vw;
+  margin-left: 3vw;
+  background: white;
+}
+
+.devis div {
+  margin: 3vw;
+  background: #f9f9f9;
+  padding: 5px;
+}
+
+.devis div .button {
+  width: auto;
+  background: white;
+  text-align: center;
+  border: 1px solid lightgray;
+}
