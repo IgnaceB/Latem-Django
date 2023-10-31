@@ -10,6 +10,7 @@ django-environ==0.11.2
 django-filter==23.3
 django-modelcluster==6.1
 django-permissionedforms==0.1
+django-sass==1.1.0
 django-taggit==4.0.0
 django-treebeard==4.7
 djangorestframework==3.14.0
@@ -19,6 +20,7 @@ filetype==1.2.0
 html5lib==1.1
 idna==3.4
 l18n==2021.3
+libsass==0.22.0
 openpyxl==3.1.2
 Pillow==10.1.0
 pillow-heif==0.13.1
@@ -31,9 +33,9 @@ sqlparse==0.4.4
 telepath==0.3.1
 typing_extensions==4.8.0
 urllib3==2.0.7
+wagtail==5.1.3
 webencodings==0.5.1
 Willow==1.6.2
-gunicorn==21.2.0
 whitenoise[brotli]>=6.0,<7.0
 
 
