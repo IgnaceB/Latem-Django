@@ -94,3 +94,6 @@ def test(request) :
 	if serializer.is_valid() :
 		serializer.save()
 	return render(request, 'home.html')
+
+def description_real(request,name) :
+	return render(request, f'{name}.html')

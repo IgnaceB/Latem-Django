@@ -1,6 +1,10 @@
 *{
 	box-sizing:border-box;
 }
+a{
+	all :unset;
+	cursor : pointer;
+}
 .wrapper{
 	overflow: scroll;
 	width:100vw;
@@ -52,7 +56,10 @@ header{
 			margin:10px;
 			li{
 				width: 30%;
-				height: 5vh;
+				height: 3vh;
+				svg{
+					height:100%;
+				}
 			}
 		}
 	}
@@ -164,7 +171,7 @@ footer{
 	div{
 	margin: 3vw;
   background: #f9f9f9;
-  padding: 5px;
+  padding: 1px 15px;
   .button{
   	width: auto;
   background: white;
@@ -173,4 +180,31 @@ footer{
   }
 }
 
+}
+.about{
+	margin-right: 3vw;
+	margin-left:3vw;
+	div{
+		display:flex;
+		justify-content: space-between;
+		margin-top: 3vw;
+		background: #f9f9f9;
+		padding:3vw;
+		align-items:center;
+		img{
+			width:150px;
+			height:150px;
+		}
+		div {
+			padding-top:0;
+			display:block;
+			padding-left: 6vw;
+			h3{
+				margin-top: 0;
+			}
+			p{
+
+			}
+		}
+	}
 }

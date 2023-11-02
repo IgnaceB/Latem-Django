@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+a {
+  all: unset;
+  cursor: pointer;
+}
+
 .wrapper {
   overflow: scroll;
   width: 100vw;
@@ -58,7 +63,11 @@ header nav ul {
 
 header nav ul li {
   width: 30%;
-  height: 5vh;
+  height: 3vh;
+}
+
+header nav ul li svg {
+  height: 100%;
 }
 
 #slider {
@@ -158,7 +167,7 @@ footer {
 .devis div {
   margin: 3vw;
   background: #f9f9f9;
-  padding: 5px;
+  padding: 1px 15px;
 }
 
 .devis div .button {
@@ -166,4 +175,33 @@ footer {
   background: white;
   text-align: center;
   border: 1px solid lightgray;
+}
+
+.about {
+  margin-right: 3vw;
+  margin-left: 3vw;
+}
+
+.about div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3vw;
+  background: #f9f9f9;
+  padding: 3vw;
+  align-items: center;
+}
+
+.about div img {
+  width: 150px;
+  height: 150px;
+}
+
+.about div div {
+  padding-top: 0;
+  display: block;
+  padding-left: 6vw;
+}
+
+.about div div h3 {
+  margin-top: 0;
 }
