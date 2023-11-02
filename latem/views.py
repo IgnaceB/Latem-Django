@@ -15,9 +15,10 @@ import time
 
 from .serializers import UserSerializer
 from .models import Users
+from .controlers import *
 
 def home(request) :
-
+	print(USERS().readAll())
 	return render(request, 'home.html')
 
 def description_real(request,name) :
@@ -42,7 +43,7 @@ def log_in(request):
 			return redirect('account')
 		else:
 			pass
-			print(Exception)
+
 			return render(request, 'login.html',{'responses':'no'})
 
 	else:
@@ -51,7 +52,7 @@ def log_in(request):
 def log_out(request):
 	logout(request)
 	return redirect('home')
-	
+
 def signup(request):
 	if request.method=='POST':
 		# check if the data is viable
@@ -73,12 +74,11 @@ def signup(request):
 					"telephone" : request.POST.get('telephone'),
 					"isAdmin":False,
 				}
-				serializer = UserSerializer(data=userData)
-				if serializer.is_valid():
-					serializer.save()
-				else : 
-					return render(request, 'signup.html', {"message": 'unknown error'})
 
+				addUser = USERS().create(data=userData)
+				if addUser == 'fail':
+					return render(request, 'signup.html')
+		
 				# Assign the id of the latem.users object to first_name
 				newUser = Users.objects.get(email=userData['email'])
 				formUserData['first_name']=newUser.id
@@ -94,11 +94,9 @@ def signup(request):
 						request.session["id_user"]=user.first_name
 						request.session.save()
 						return redirect('account')
-					else : 
-						return redirect('login')
 				else : 
 					return render(request, 'signup.html', {"message": 'unknown error'})
-				return redirect('home')
+				
 
 			except Exception as error : 
 					print(error)
