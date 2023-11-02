@@ -8,8 +8,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+	<title>Home</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -58,22 +58,50 @@
 				</div>
 			</nav>
 		</header>
-		<section class="login-form" action="{% url 'login' %}">
-            <h2>Login</h2>
-            <form method="post">
-           {% csrf_token %}
-                <div class="form-group">
-                    <label for="email">email:</label>
-                    <input type="text" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
-        </section>
+       {%if message is not null %}
+       <p>
+       {{message}}
+   </p>
+       <script > 
+        let message = `{{message}}`
+       alert(message) 
+   </script>
+        {% endif %}
+       <section class="signup-form">
+        <h2>Sign Up</h2>
+        <form method="post" >
+           
+            {% csrf_token %}
+         
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password1">Password:</label>
+                <input type="password" autocomplete="new-password" id="id_password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password2">Password confirmation:</label>
+                <input type="password" autocomplete="new-password" id="id_password2" name="password2" required>
+            </div>
+            <div class="form-group">
+                <label for="firstName">firstName:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">lastName:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="telephone">telephone:</label>
+                <input type="text" id="telephone" name="telephone">
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </section>
+
 
 	</body>
 	<footer>

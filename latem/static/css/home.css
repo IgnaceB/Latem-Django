@@ -24,7 +24,7 @@ body {
 }
 
 header {
-  height: 45vw;
+  height: 40vw;
   width: 100%;
   padding: 10px;
   margin: 0;
@@ -42,7 +42,7 @@ header .logo {
 
 header .logo img {
   max-width: 100%;
-  max-height: 100px;
+  max-height: 130px;
 }
 
 header nav {
@@ -180,6 +180,7 @@ footer {
 .about {
   margin-right: 3vw;
   margin-left: 3vw;
+  margin-bottom: 6vh;
 }
 
 .about div {

@@ -21,7 +21,7 @@ body{
 }
 
 header{
-	height:45vw;
+	height:40vw;
 	width:100%;
 	padding:10px;
 	margin:0;
@@ -37,7 +37,7 @@ header{
 
 		img{
 			max-width: 100%;
-			max-height: 100px;
+			max-height: 130px;
 
 		}
 	}
@@ -184,6 +184,7 @@ footer{
 .about{
 	margin-right: 3vw;
 	margin-left:3vw;
+	margin-bottom:6vh;
 	div{
 		display:flex;
 		justify-content: space-between;
