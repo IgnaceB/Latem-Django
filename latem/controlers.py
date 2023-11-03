@@ -50,3 +50,33 @@ class USERS(CRUD):
 		self.serializer=UserSerializer
 		self.table=Users
 
+class ITEMS(CRUD):
+	def __init__(self):
+		self.serializer=ItemsSerializer
+		self.table=Items
+
+class DESCRIPTION_ITEMS(CRUD):
+	def __init__(self):
+		self.serializer=DescriptionItemsSerializer
+		self.table=DescriptionItems
+
+class DEVIS(CRUD):
+	def __init__(self):
+		self.serializer=DevisSerializer
+		self.table=Devis
+
+class DEVIS_FILE(CRUD):
+	def __init__(self):
+		self.serializer=DevisFileSerializer
+		self.table=DevisFile
+
+class LIGNES_ITEMS_DEVIS(CRUD):
+	def __init__(self):
+		self.serializer=LignesItemsDevisSerializer
+		self.table=LignesItemsDevis
+
+class LIGNES_DESC_DEVIS(CRUD):
+	def __init__(self):
+		self.serializer=LignesDescDevisSerializer
+		self.table=LignesDescDevis
+

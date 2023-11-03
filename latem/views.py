@@ -26,7 +26,8 @@ def description_real(request,name) :
 
 def account(request):
 	if request.user.is_authenticated:
-
+		if request.user.is_superuser :
+			return render(request,'dashboard.html')
 		return render(request, 'account.html')
 	else :
 		return redirect('login')
