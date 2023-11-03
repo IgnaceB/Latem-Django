@@ -23,6 +23,7 @@ class DescriptionItems(models.Model):
     description = models.CharField(max_length=255)
     parent_description=models.ForeignKey('self', on_delete=models.CASCADE, related_name='child_desc', blank=True, null=True)
     description_type = models.CharField(max_length=30, choices=DESCRIPTION_CHOICES, default='charac')
+    apply_on_all_items=models.BooleanField(default=False)
 
 class Devis(models.Model):
     STATUS_CHOICES = [

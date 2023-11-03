@@ -1,5 +1,7 @@
 from .serializers import *
 from .models import *
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 class CRUD:
 	def __init__(self):
@@ -38,12 +40,12 @@ class CRUD:
 		except objectToRead.DoesNotExist :
 			return 'fail'
 		objectReadable = self.serializer(objectToRead)
-		return objectReadable
+		return objectReadable.data
 
 	def readAll(self) :
 		objectsToRead = self.table.objects.all()
-		objectsReadable = self.serializer(objectsToRead)
-		return objectsReadable
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
 
 class USERS(CRUD):
 	def __init__(self):
@@ -64,6 +66,28 @@ class DEVIS(CRUD):
 	def __init__(self):
 		self.serializer=DevisSerializer
 		self.table=Devis
+	def getNewDevis(self):
+		try : 
+			objectsToRead = self.table.objects.filter(Q(responsableId__isnull=True) & ~Q(status='cloturé'))
+		except self.table.DoesNotExist:
+			return ''
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
+	def getMyDevis(self, id):
+		try : 
+			objectsToRead = self.table.objects.filter(Q(responsableId=id) & ~Q(status='cloturé'))
+		except self.table.DoesNotExist:
+			return ''
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
+
+	def getOtherDevis(self, id):
+		try : 
+			objectsToRead = self.table.objects.filter(~Q(responsableId=id) & ~Q(status='cloturé'))
+		except self.table.DoesNotExist:
+			return ''
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
 
 class DEVIS_FILE(CRUD):
 	def __init__(self):

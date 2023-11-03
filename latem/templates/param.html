@@ -58,34 +58,36 @@
 				</div>
 			</nav>
 		</header>
-		<h1>Dashboard</h1>
-		<h2>Bonjour {{ me.firstName }}</h2>
-		<section class='nouveauxDevis'>
-			<h3> Nouveaux Devis </h3>
-			<ul>
-			{% for devis in newDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
-		</section>
-		<section class='mesDevis'>
-			<h3> Mes Devis </h3>
-					<ul>
-			{% for devis in myDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
-		</section>
-		<section class='autresDevis'>
-			<h3> Autres Devis </h3>
-				<ul>
-			{% for devis in otherDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
-		</section>
-		<a href="{% url 'param' %}">paramètre</a>
-	<a href="{% url 'logout' %}">Déconnexion</a>
+		<h3>liste des objets existants</h3>
+		 <select name="listElem" id="listElem" required>
+            {% for element in items %}
+                <option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
+            {% endfor %}
+  
+        </select>
+        <p id='elemDescription'></p>
+        <script> 
+        	let descriptionContainer = document.getElementById('elemDescription')
+        	let selector = document.getElementById('listElem')
+        	selector.addEventListener("change",event=>{
+        		selectedOption=selector.options[selector.options.selectedIndex]
+        		descriptionContainer.innerText=selectedOption.getAttribute("description")
+        	})
+        </script>
+		<h3>Ajouter un objet</h3>
+		
+			 <form method="post" >
+			 	{% csrf_token %}
+                    <div class="form-group">
+                        <label for="elem">nom de l'objet</label>
+                        <input type="text" id="nameElem" name="nameElem" required>
+                        <label for="elem">description</label>
+                        <input type="text" id="descElem" name="descElem" required>
+                    </div>
+                    <button type="submit">ajouter l'objet</button>
+                </form>
+		
+
 	</body>
 	<footer>
 	</footer>

@@ -18,7 +18,7 @@ from .models import Users
 from .controlers import *
 
 def home(request) :
-	print(USERS().readAll())
+
 	return render(request, 'home.html')
 
 def description_real(request,name) :
@@ -27,10 +27,37 @@ def description_real(request,name) :
 def account(request):
 	if request.user.is_authenticated:
 		if request.user.is_superuser :
-			return render(request,'dashboard.html')
+			return redirect('dashboard')
 		return render(request, 'account.html')
 	else :
 		return redirect('login')
+def param(request):
+	if request.user.is_superuser :
+		if request.method=='POST' and request.POST['nameElem']:
+			data={
+				'name':request.POST['nameElem'],
+				'description':request.POST['descElem'],
+					}
+			ITEMS().create(data=data)
+			return redirect('param')
+		elif request.method=='POST' and request.POST['nameDesc'] :
+			
+
+		allItems = ITEMS().readAll()
+		allDescription = DESCRIPTION_ITEMS().readAll()
+		return render(request, 'param.html', {'items': allItems, 'description' : allDescription})
+	else :
+		return redirect('home')
+def dashboard(request):
+	if request.user.is_superuser :
+		myId=request.session["id_user"]
+		me=USERS().readOne(myId)
+		newDevis=DEVIS().getNewDevis()
+		myDevis=DEVIS().getMyDevis(myId)
+		otherDevis=DEVIS().getOtherDevis(myId)
+		return render(request,'dashboard.html',{'newDevis': newDevis, 'myDevis':myDevis, 'otherDevis':otherDevis, 'me':me})
+	else : 
+		redirect('home')
 
 def log_in(request):
 	if request.method == 'POST':
