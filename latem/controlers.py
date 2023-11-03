@@ -61,6 +61,14 @@ class DESCRIPTION_ITEMS(CRUD):
 	def __init__(self):
 		self.serializer=DescriptionItemsSerializer
 		self.table=DescriptionItems
+	def getAllOrderedByLevel(self):
+		objectsToRead = self.table.objects.all().order_by('level')
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
+	def getMaxLevel(self):
+		objectsToRead = self.table.objects.all().order_by('-level').first()
+		objectsReadable = self.serializer(objectsToRead)
+		return objectsReadable.data['level']
 
 class DEVIS(CRUD):
 	def __init__(self):

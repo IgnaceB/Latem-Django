@@ -31,8 +31,34 @@ def account(request):
 		return render(request, 'account.html')
 	else :
 		return redirect('login')
+
 def param(request):
 	if request.user.is_superuser :
+		allItems = ITEMS().readAll()
+		allDescriptionData = DESCRIPTION_ITEMS().getAllOrderedByLevel()
+		maxLevel=DESCRIPTION_ITEMS().getMaxLevel()
+		
+		characDescriptions = []
+		finitionsDescriptions= []
+		for x in range(maxLevel+1):
+			characDescriptions.append([])
+			finitionsDescriptions.append([])
+		for desc_data in allDescriptionData:
+			desc_item= {
+			'id':desc_data['id'],
+			'name':desc_data['name'],
+			'description':desc_data['description'],
+			'apply_on_all_items':desc_data['apply_on_all_items'],
+			'parent_item':desc_data['parent_item'],
+			'description_type':desc_data['description_type'],
+			'parent_description':desc_data['parent_description'],
+			'level':desc_data['level'],
+			}
+			if desc_data['description_type']=='charac':
+				characDescriptions[desc_item['level']].append(desc_item)
+			else :
+				finitionsDescriptions[desc_item['level']].append(desc_item)
+		
 		if request.method=='POST' and request.POST['nameElem']:
 			data={
 				'name':request.POST['nameElem'],
@@ -40,12 +66,10 @@ def param(request):
 					}
 			ITEMS().create(data=data)
 			return redirect('param')
-		elif request.method=='POST' and request.POST['nameDesc'] :
-			
 
-		allItems = ITEMS().readAll()
-		allDescription = DESCRIPTION_ITEMS().readAll()
-		return render(request, 'param.html', {'items': allItems, 'description' : allDescription})
+		# if request.method == 'POST' and request.POST.get('nameDesc'):
+		print(characDescriptions)
+		return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions[0]})
 	else :
 		return redirect('home')
 def dashboard(request):

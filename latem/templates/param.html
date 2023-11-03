@@ -58,43 +58,134 @@
 				</div>
 			</nav>
 		</header>
-		<h3>liste des objets existants</h3>
-		 <select name="listElem" id="listElem" required>
-            {% for element in items %}
-                <option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
-            {% endfor %}
-  
-        </select>
-        <p id='elemDescription'></p>
-        <script> 
+		<section class="object">
+			<h3>liste des objets existants</h3>
+			<select name="listElem" id="listElem" required>
+				{% for element in items %}
+				<option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
+				{% endfor %}
+
+			</select>
+<!-- 			<p id='elemDescription'></p>
+			<script> 
+				let descriptionContainer = document.getElementById('elemDescription')
+				let selector = document.getElementById('listElem')
+				selector.addEventListener("change",event=>{
+					selectedOption=selector.options[selector.options.selectedIndex]
+					descriptionContainer.innerText=selectedOption.getAttribute("description")
+				})
+			</script> -->
+			<h3>Ajouter un objet</h3>
+
+			<form method="post" >
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="elem">nom de l'objet</label>
+					<input type="text" id="nameElem" name="nameElem" required>
+					<label for="elem">description</label>
+					<input type="text" id="descElem" name="descElem" required>
+				</div>
+				<button type="submit">ajouter l'objet</button>
+			</form>
+		</section>
+
+		<section class='charac'>
+			<h3>liste des charactéristiques existantes</h3>
+			<select name="listElem" id="listElem2" required>
+				{% for element in items %}
+				<option value="{{ element.name }}" description="{{element.description}}" id="{{ element.id }}">{{ element.name }}</option>
+				{% endfor %}
+			</select>
+				{% for array in description %}
+
+				<select name="listCharac" id="listCharac{{forloop.counter}}" required>
+					{% for element in array %}
+						<option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
+					{% endfor %}
+
+				</select>
+				{% endfor %}
+			<p id='elemDescription'></p>
+
+			<script>
+				
+    // Obtenir une référence aux éléments de sélection
+				var listElemSelect = document.getElementById("listElem2");
+				var listCharacSelect = document.getElementById("listCharac1");
+				
+    // Écouter les changements de sélection dans le premier menu déroulant
+				listElemSelect.addEventListener("change", function () {
+					var selectedElem = listElemSelect.options[listElemSelect.selectedIndex];
+					var selectedElemDescription = selectedElem.getAttribute("id");
+
+        // Nettoyer le deuxième menu déroulant
+					listCharacSelect.innerHTML = "";
+					
+        // Remplir le deuxième menu déroulant avec les caractéristiques correspondantes
+					{% for element in description.0 %}
+					if (selectedElemDescription == {{ element.parent_item }}) {
+						console.log({{ element.parent_item }})
+						var option = document.createElement("option");
+						option.value = "{{ element.name }}";
+						option.text = "{{ element.name }}";
+						listCharacSelect.appendChild(option);
+					}
+					{% endfor %}
+				});
+			</script>
+		</section>
+
+
+		<section class="finition">
+			<h3>Ajouter un objet</h3>
+			
+			<form method="post" >
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="elem">nom de l'objet</label>
+					<input type="text" id="nameElem" name="nameElem" required>
+					<label for="elem">description</label>
+					<input type="text" id="descElem" name="descElem" required>
+				</div>
+				<button type="submit">ajouter l'objet</button>
+			</form>
+			<h3>liste des objets existants</h3>
+			<select name="listElem" id="listElem" required>
+				{% for element in items %}
+				<option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
+				{% endfor %}
+
+			</select>
+			<p id='elemDescription'></p>
+<!--         <script> 
         	let descriptionContainer = document.getElementById('elemDescription')
         	let selector = document.getElementById('listElem')
         	selector.addEventListener("change",event=>{
         		selectedOption=selector.options[selector.options.selectedIndex]
         		descriptionContainer.innerText=selectedOption.getAttribute("description")
         	})
-        </script>
-		<h3>Ajouter un objet</h3>
-		
-			 <form method="post" >
-			 	{% csrf_token %}
-                    <div class="form-group">
-                        <label for="elem">nom de l'objet</label>
-                        <input type="text" id="nameElem" name="nameElem" required>
-                        <label for="elem">description</label>
-                        <input type="text" id="descElem" name="descElem" required>
-                    </div>
-                    <button type="submit">ajouter l'objet</button>
-                </form>
-		
+        </script> -->
+        <h3>Ajouter un objet</h3>
 
-	</body>
-	<footer>
-	</footer>
+        <form method="post" >
+        	{% csrf_token %}
+        	<div class="form-group">
+        		<label for="elem">nom de l'objet</label>
+        		<input type="text" id="nameElem" name="nameElem" required>
+        		<label for="elem">description</label>
+        		<input type="text" id="descElem" name="descElem" required>
+        	</div>
+        	<button type="submit">ajouter l'objet</button>
+        </form>
+    </section>
+
+</body>
+<footer>
+</footer>
 </div>	
 {% else %}
-	 <script>
-                window.location.href = "{% url 'home' %}";
-      </script>
+<script>
+	window.location.href = "{% url 'home' %}";
+</script>
 {% endif %}
 </html>
