@@ -14,7 +14,7 @@ class CRUD:
 			serializer.save()
 			return 'ok'
 		else :
-			return 'fail'
+			return serializer.errors
 
 	def delete (self, objectId):
 		try :

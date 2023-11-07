@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpRespons
 from django.http import JsonResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserCreationForm
+from .forms import *
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators import gzip
@@ -42,7 +42,7 @@ def param(request):
 		finitionsDescriptions= []
 		for x in range(maxLevel+1):
 			characDescriptions.append([])
-			finitionsDescriptions.append([])
+			
 		for desc_data in allDescriptionData:
 			desc_item= {
 			'id':desc_data['id'],
@@ -56,22 +56,40 @@ def param(request):
 			}
 			if desc_data['description_type']=='charac':
 				characDescriptions[desc_item['level']].append(desc_item)
-			else :
-				finitionsDescriptions[desc_item['level']].append(desc_item)
+			elif  desc_data['description_type']=='finitions':
+				finitionsDescriptions.append(desc_item)
 		
-		if request.method=='POST' and request.POST['nameElem']:
-			data={
-				'name':request.POST['nameElem'],
-				'description':request.POST['descElem'],
-					}
-			ITEMS().create(data=data)
-			return redirect('param')
+		if request.method=='POST' and 'parent_item' in request.POST:
+			form=descriptionCreationForm(request.POST)
+			if form.is_valid():
+			
+				tryCreate = DESCRIPTION_ITEMS().create(data=form.cleaned_data)
+				if tryCreate != 'ok':
+					print(tryCreate)
+					return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : tryCreate})
+				
+				else : 
+					return redirect('param')
+			else : 
+				return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors})
 
-		# if request.method == 'POST' and request.POST.get('nameDesc'):
-		print(characDescriptions)
-		return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions[0]})
+		elif request.method=='POST' and 'name' in request.POST:
+			form = ItemCreationForm(request.POST)
+			if form.is_valid():
+				ITEMS().create(data=form.cleaned_data)
+				return redirect('param')
+			else : 
+				return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors})
+		else : 
+			print(finitionsDescriptions)
+			return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm,})
 	else :
 		return redirect('home')
+
 def dashboard(request):
 	if request.user.is_superuser :
 		myId=request.session["id_user"]
