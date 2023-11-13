@@ -85,6 +85,10 @@ h1, h2, h3 {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: left;
+            height:5vh;
+            svg{
+                height:100%;
+            }
         }
 
         th {
@@ -105,5 +109,28 @@ h1, h2, h3 {
             text-decoration: underline;
         }
     }
+      button{
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: grey;
+}
+    .subNav{
+        margin-top:10px;
+        display: flex;
+  justify-content: space-around;
+    }
 
 }   
+footer{
+    height:10vh;
+}

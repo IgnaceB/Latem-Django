@@ -209,3 +209,6 @@ def signup(request):
 	else : 
 
 		return render(request,'signup.html')
+
+def devis(request,id):
+	return render(request,'devis.html')

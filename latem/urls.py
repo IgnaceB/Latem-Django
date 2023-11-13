@@ -28,6 +28,7 @@ urlpatterns = [
     path('signup',views.signup, name='signup'),
     path('logout',views.log_out, name='logout'),
     path('dashboard',views.dashboard, name='dashboard'),
-    path('param', views.param, name='param')
+    path('param', views.param, name='param'),
+    path('devis/<int:id>/', views.devis, name='devis'),
     
 ]

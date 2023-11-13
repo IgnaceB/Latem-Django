@@ -55,7 +55,7 @@ const updateFieldsCharac=()=>{
 }
 }	
 
-
+// update the hidden fields in the forms finitions, before submission
 const updateFieldsFinit=()=>{
 
 	/*Utilisation de selcteur CSS obligatoire : les deux forms appelé ont les meme ID si autre que css => seulement le form
@@ -78,6 +78,7 @@ const updateFieldsFinit=()=>{
 
 }	
 
+//add eventlistener on the submit button
 let submitCharac = document.getElementById('submitCharac')
 submitCharac.addEventListener('click',updateFieldsCharac)
 
@@ -85,9 +86,9 @@ submitCharac.addEventListener('click',updateFieldsCharac)
 let submitFinit = document.getElementById('submitFinit')
 submitFinit.addEventListener('click',updateFieldsFinit)
 
+
+//applique un event listener sur chaque liste => qui remplit la liste suivante en fonction de la valeur sélectionnée.
 const displayNextList=()=>{
-/*let description = JSON.parse(document.currentScript.previousElementSibling.textContent
-					)*/
 
 				for (let i=1; i<description.length; i++) {
 
@@ -155,9 +156,9 @@ const displayNextList=()=>{
 displayNextList()
 
 
+// applique un event listener sur la liste des items pour afficher les finitions associées.
 displayNextListFinit=()=>{
-/*let finitions = JSON.parse(document.currentScript.nextElementSibling.textContent
-					)*/
+
     // Obtenir une référence aux éléments de sélection
 					let listItemSelect = document.getElementById(`listFinit`);
 					let listFinitSelect = document.getElementById(`listFinit1`);
