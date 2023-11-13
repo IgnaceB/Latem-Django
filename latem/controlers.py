@@ -17,11 +17,13 @@ class CRUD:
 			return serializer.errors
 
 	def delete (self, objectId):
+	
 		try :
 			objectToDelete=self.table.objects.get(id=objectId)
-		except objectToDelete.DoesNotExist:
-			return 'fail'
-		objectToDelete.delete()
+			objectToDelete.delete()
+		except Exception as error:
+			raise error
+	
 		return 'ok'
 
 	def update (self, objectId, data) :

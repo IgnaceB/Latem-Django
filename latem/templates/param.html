@@ -8,10 +8,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/param.css' %}">
 	{{ description | json_script}}
 	<script src="{% static 'script/devis.js' %}" defer></script>
 	{{ finitions | json_script}}
-	<!-- <script type="application/json">[{"date": "2022-10-05", "count": 11}, {"date": "2022-10-06", "count": 12}]</script> -->
+
 	<title>Home</title>
 </head>
 {% if user.is_superuser %}
@@ -71,74 +72,96 @@
         </ul>
     </div>
 {% endif %}
-		<section class="object">
-			<h3>liste des objets existants</h3>
+		<section class="object" id='object'>
+			<h4>liste des objets existants</h4>
 			<select name="listElem" id="listElem" required>
+				<!-- génère une valeur vide dans la premiere case -->
+				<option value="" description=""id ="" ></option>
+			
 				{% for element in items %}
-				<option value="{{ element.name }}" description="{{element.description}}">{{ element.name }}</option>
+				<option value="{{ element.name }}" description="{{element.description}}"id = {{element.id}}>{{ element.name }}</option>
 				{% endfor %}
-
+		
 			</select>
-			<p id='elemDescription'></p>
+			<h5 id='elemDescription'></h5>
+			
+					<form method="post" id="deleteItem" >
+				{% csrf_token %}
+				{{itemSuppressionForm}}
+				<input type="hidden" name="formulaire_id" value="deleteItem">
+				<input type="submit" value="Supprimer" id='submitItemSuppression'>
+			</form>
 				<!-- pour display la description => devis.js => getAttribute -->
-			<h3>Ajouter un objet</h3>
+			<h5>Ajouter un objet</h5>
 
 			<form method="post" >
 				{% csrf_token %}
 				{{ItemCreationForm}}
-				<input type="submit" value="Submit">
+				<input type="submit" value="Enregistrer">
 			</form>
 		</section>
+<hr/>
+		<section class='charac' id='charac'>
 
-		<section class='charac'>
-
-			<h3>liste des charactéristiques existantes</h3>
+			<h4>liste des charactéristiques existantes</h4>
 
 			<!-- génère la liste des objets -->
 			<select name="listElem" id="listCharac0" required>
+				<!-- génère une valeur vide dans la premiere case -->
+				<option value="" description=""id ="" ></option>
 				{% for element in items %}
 				<option value="{{ element.name }}" description="{{element.description}}" id="{{ element.id }}">{{ element.name }}</option>
 				{% endfor %}
+
 			</select>
 			<!-- génère les liste déroulante pour chaque niveau de description -->
 			{% for array in description %}
 
-			<select name="listCharac" id="listCharac{{forloop.counter}}" required>
+			<select name="listCharac" id="listCharac{{forloop.counter}}" style="visibility:hidden" required>
 				{% for element in array %}
 				<option value="{{ element.name }}" description="{{element.description}}" id="{{ element.id }}" parent_description="{{element.parent_description}}" parent_item="{{element.parent_item}}">{{ element.name }}</option>
 				{% endfor %}
 
 			</select>
 			{% endfor %}
+			<h5 id='characDescription'> </h5>
+			
 			<!-- pour display dynamiquement les informations => devis.js => displayNextList -->
+		
 
-			<h3>Ajouter une charactéristique à l'embranchement sélectionné</h3>
+					<form method="post" id="deleteDescription" >
+				{% csrf_token %}
+				{{descriptionSuppressionForm}}
+				<input type="hidden" name="formulaire_id" value="deleteDescription">
+				<input type="submit" value="Supprimer" id='submitCharacSuppression'>
+			</form>
+			<h5>Ajouter une charactéristique à l'embranchement sélectionné</h5>
 
 			<form method="post" >
 				{% csrf_token %}
 			
-				{% csrf_token %}
+	
 				{{descriptionCreationForm}}
-				<input type="submit" value="Submit">
+
+				<input type="submit" value="Enregistrer" id='submitCharac'>
 			</form>
+		
 		</section>
+<hr/>
 
-
-		<section class="finition">
-			<h3>liste des finitions existantes</h3>
+		<section class="finition" id='finitions'>
+			<h4>liste des finitions existantes</h4>
 			
-
-
-			<h3>Ajouter une finition</h3>
 				<select name="listElem" id="listFinit" required>
+					<!-- génère une valeur vide dans la premiere case -->
+				<option value="" description=""id ="" ></option>
 				{% for element in items %}
 				<option value="{{ element.name }}" description="{{element.description}}" id="{{ element.id }}">{{ element.name }}</option>
 				{% endfor %}
 			</select>
-
-				
-			
 			<select name="listFinit" id="listFinit1" required>
+				<!-- génère une valeur vide dans la premiere case -->
+				<option value="" description=""id ="" ></option>
 				{% for element in finitions %}
 
 					<option value="{{ element.name }}" description="{{element.description}}" id="{{ element.id }}" parent_description="{{element.parent_description}}" parent_item="{{element.parent_item}}">{{ element.name }}</option>
@@ -147,16 +170,25 @@
 				{% endfor %}
 
 			</select>
-			
-				
+			<h5 id='finitionDescription'></h5>
+		
+
+		
+					<form method="post" id="deleteFinition" >
+				{% csrf_token %}
+				{{descriptionSuppressionForm}}
+				<input type="hidden" name="formulaire_id" value="deleteDescription">
+				<input type="submit" value="Supprimer" id='submitFinitSuppression'>
+			</form>
+			<h5>Ajouter une finition</h5>
 				
 				<form method="post" >
-				
 			
 				{% csrf_token %}
 				{{descriptionCreationForm}}
-				<input type="submit" value="Submit">
+				<input type="submit" value="Enregistrer" id='submitFinit'>
 				</form>
+
 				
 			
 		</section>

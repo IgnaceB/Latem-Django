@@ -40,24 +40,25 @@ def param(request):
 		
 		characDescriptions = []
 		finitionsDescriptions= []
-		for x in range(maxLevel+1):
-			characDescriptions.append([])
-			
-		for desc_data in allDescriptionData:
-			desc_item= {
-			'id':desc_data['id'],
-			'name':desc_data['name'],
-			'description':desc_data['description'],
-			'apply_on_all_items':desc_data['apply_on_all_items'],
-			'parent_item':desc_data['parent_item'],
-			'description_type':desc_data['description_type'],
-			'parent_description':desc_data['parent_description'],
-			'level':desc_data['level'],
-			}
-			if desc_data['description_type']=='charac':
-				characDescriptions[desc_item['level']].append(desc_item)
-			elif  desc_data['description_type']=='finitions':
-				finitionsDescriptions.append(desc_item)
+		if maxLevel:
+			for x in range(maxLevel+1):
+				characDescriptions.append([])
+		if allDescriptionData :	
+			for desc_data in allDescriptionData:
+				desc_item= {
+				'id':desc_data['id'],
+				'name':desc_data['name'],
+				'description':desc_data['description'],
+				'apply_on_all_items':desc_data['apply_on_all_items'],
+				'parent_item':desc_data['parent_item'],
+				'description_type':desc_data['description_type'],
+				'parent_description':desc_data['parent_description'],
+				'level':desc_data['level'],
+				}
+				if desc_data['description_type']=='charac':
+					characDescriptions[desc_item['level']].append(desc_item)
+				elif  desc_data['description_type']=='finitions':
+					finitionsDescriptions.append(desc_item)
 		
 		if request.method=='POST' and 'parent_item' in request.POST:
 			form=descriptionCreationForm(request.POST)
@@ -65,15 +66,18 @@ def param(request):
 			
 				tryCreate = DESCRIPTION_ITEMS().create(data=form.cleaned_data)
 				if tryCreate != 'ok':
-					print(tryCreate)
+					
 					return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
-				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : tryCreate})
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : tryCreate,
+				'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})
 				
 				else : 
 					return redirect('param')
 			else : 
 				return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
-				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors})
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors,
+				'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,
+				})
 
 		elif request.method=='POST' and 'name' in request.POST:
 			form = ItemCreationForm(request.POST)
@@ -82,11 +86,37 @@ def param(request):
 				return redirect('param')
 			else : 
 				return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
-				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors})
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors,
+				'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})
+		
+		elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteItem" :
+
+			form = itemSuppressionForm(request.POST)
+			print(form)
+			if form.is_valid():
+				
+				ITEMS().delete(form.cleaned_data['id'])
+				return redirect('param')
+			else : 
+				return HttpResponse("Invalid request or form not valid.")
+
+		elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteDescription" :
+			
+			form = descriptionSuppressionForm(request.POST)
+			print(form)
+			if form.is_valid():
+				
+				DESCRIPTION_ITEMS().delete(form.cleaned_data['id'])
+				return redirect('param')
+			else : 
+				return HttpResponse("Invalid request or form not valid.")
+
+
 		else : 
-			print(finitionsDescriptions)
+		
 			return render(request, 'param.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
-				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm,})
+				'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm,
+				'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})
 	else :
 		return redirect('home')
 
