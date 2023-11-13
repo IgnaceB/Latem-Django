@@ -7,7 +7,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
 	<title>Home</title>
 </head>
 {% if user.is_superuser %}
@@ -58,31 +59,84 @@
 				</div>
 			</nav>
 		</header>
+		<section id="container">
 		<h1>Dashboard</h1>
 		<h2>Bonjour {{ me.firstName }}</h2>
 		<section class='nouveauxDevis'>
 			<h3> Nouveaux Devis </h3>
-			<ul>
-			{% for devis in newDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
+			  
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for devis in newDevis %}
+                <tr>
+                    <td>{{ devis.id }}</td>
+                    <td>{{ devis.nom }}</td>
+                    <td>
+                        <a href="">
+                            <button>Voir le devis</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 		</section>
 		<section class='mesDevis'>
 			<h3> Mes Devis </h3>
-					<ul>
-			{% for devis in myDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
+			    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for devis in myDevis %}
+                <tr>
+                    <td>{{ devis.id }}</td>
+                    <td>{{ devis.nom }}</td>
+                    <td>
+                        <a href="">
+                            <button>Voir le devis</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 		</section>
 		<section class='autresDevis'>
 			<h3> Autres Devis </h3>
-				<ul>
-			{% for devis in otherDevis %}
-				<li> Devis n°{{ devis.id }} </li>
-			{% endfor %}
-		</ul>
+						    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for devis in otherDevis %}
+                <tr>
+                    <td>{{ devis.id }}</td>
+                    <td>{{ devis.nom }}</td>
+                    <td>
+                        <a href="">
+                            <button>Voir le devis</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 		</section>
 		<a href="{% url 'param' %}">paramètre</a>
 	<a href="{% url 'logout' %}">Déconnexion</a>
@@ -90,6 +144,7 @@
 	<footer>
 	</footer>
 </div>	
+</section>
 {% else %}
 	 <script>
                 window.location.href = "{% url 'home' %}";

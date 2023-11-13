@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+.wrapper {
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  width: 100vw;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  overflow: hidden;
+}
+
+header {
+  height: 40vw;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+header .logo img {
+  max-width: 100%;
+  max-height: 130px;
+}
+
+header nav {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  left: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  background: black;
+  width: 100%;
+}
+
+header nav ul {
+  display: flex;
+  margin: 10px;
+}
+
+header nav ul li {
+  width: 30%;
+  height: 3vh;
+}
+
+header nav ul li svg {
+  height: 100%;
+}
+
+h1, h2, h3 {
+  color: #333;
+}
+
+#container {
+  margin-right: 3vw;
+  margin-left: 3vw;
+}
+
+#container section table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+}
+
+#container section th, #container section td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+#container section th {
+  background-color: #333;
+  color: white;
+}
+
+#container section tr:hover {
+  background-color: #f5f5f5;
+}
+
+#container section a {
+  text-decoration: none;
+  color: #333;
+}
+
+#container section a:hover {
+  text-decoration: underline;
+}
