@@ -131,7 +131,9 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 		break
 	case 'item' :
 		console.log(event.key)
-		if (event.keyCode==13 || event.keyCode==9) {
+		alert(event.key)
+		alert(event.keyCode)
+		if (event.keyCode==13 || event.key ==='Tab' || event.keyCode ==229) {
 			event.preventDefault()
 			let quantite = cellule.firstElementChild.value
 			let id_item = cellule.parentElement.getAttribute('ligneitemid')
@@ -159,7 +161,7 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 		formToFill = document.getElementById('updateDescriptionForm')
 
 		celluleToModify.addEventListener("keypress", (event) =>{
-			if (event.keyCode==13 || event.keyCode==9) {
+			if (event.keyCode==13 || event.key==='Tab' || event.keyCode ==229) {
 			event.preventDefault()
 			let inputId = formToFill.querySelector('#id_id')
 			inputId.value=idLigneDescription
