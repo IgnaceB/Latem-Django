@@ -158,9 +158,9 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 
 		formToFill = document.getElementById('updateDescriptionForm')
 
-		celluleToModify.addEventListener("keypress", (event) =>{
-			if (event.keyCode==13 || event.key==='Tab' || event.keyCode ==229) {
-			event.preventDefault()
+		celluleToModify.addEventListener("keypress", (event2) =>{
+			if (event2.keyCode==13 || event2.key==='Tab' || event2.keyCode ==229) {
+			event2.preventDefault()
 			let inputId = formToFill.querySelector('#id_id')
 			inputId.value=idLigneDescription
 			let textCustom = document.getElementById('input_textCustom').value
@@ -168,7 +168,7 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 			textInput.value=textCustom
 			typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
 			typeOfFormInput.value='modifyDescription'
-			confirmationAlert(event,formToFill)
+			confirmationAlert(event2,formToFill)
 			alreadyModifying=0
 
 	}
