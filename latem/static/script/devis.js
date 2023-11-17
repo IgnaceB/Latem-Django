@@ -130,9 +130,7 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 		confirmationAlert(event, formToFill)
 		break
 	case 'item' :
-		console.log(event.key)
-		alert(event.key)
-		alert(event.keyCode)
+	
 		if (event.keyCode==13 || event.key ==='Tab' || event.keyCode ==229) {
 			event.preventDefault()
 			let quantite = cellule.firstElementChild.value
