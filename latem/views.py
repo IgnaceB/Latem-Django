@@ -302,7 +302,8 @@ def devis(request,id):
 		# requset pour modifier la quantité d'un item 			
 			case 'deleteDevis' :
 				
-				form = createLineItemForm(request.POST)
+				form = deleteDevisForm(request.POST)
+				
 				if form.is_valid():
 					print('deletedevis')
 					try : 
