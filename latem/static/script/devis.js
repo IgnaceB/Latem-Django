@@ -1,301 +1,192 @@
-let description = JSON.parse(document.currentScript.previousElementSibling.textContent)
-let finitions = JSON.parse(document.currentScript.nextElementSibling.textContent)
+let dataset = JSON.parse(document.currentScript.nextElementSibling.textContent)
 
-
-//renvoie la description de l'element selctionné
-const getAttribute=(container,selection)=>{
-	let descriptionContainer = document.getElementById(container)
-	let selector = document.getElementById(selection)
-	selector.addEventListener("change",event=>{
-		selectedOption=selector.options[selector.options.selectedIndex]
-		descriptionContainer.innerText=`Description : ${selectedOption.getAttribute("description")}`
-	})
-
-}	
-
-getAttribute('elemDescription','listElem')	
-
-
-// update the hidden fiels in the forms Charac, before submission
-const updateFieldsCharac=()=>{
-	let parent_description={}
-	let inputParentDescription = document.getElementById('id_parent_description')
-	let inputParentItem = document.getElementById('id_parent_item')
-	let inputLevel = document.getElementById('id_level')
-	let inputDescriptionType = document.getElementById('id_description_type')
-
-	let item=document.getElementById('listCharac0')
-	let selectedItem=item.options[item.selectedIndex]
-
-	inputDescriptionType.value='charac'
-	inputLevel.value=1
-	inputParentItem.value=selectedItem.getAttribute('id')
-	inputParentDescription.value=''
-	let parent={}
-	for (let i=1; i<description.length+1; i++) {
-
-
-		let selectList = document.getElementById(`listCharac${i}`)
-
-		if (selectList.value !== '') {
-
-			let selectedOption = selectList.options[selectList.selectedIndex]
-
-				parent = {
-			  'parent_description': selectedOption.getAttribute('id'),
-			  'level': i + 1
-			};
-		}
-		else {
-			continue
-		}
-
-	inputLevel.value=parent.level
-	inputParentDescription.value=parent.parent_description
-}
-}	
-
-// update the hidden fields in the forms finitions, before submission
-const updateFieldsFinit=()=>{
-
-	/*Utilisation de selcteur CSS obligatoire : les deux forms appelé ont les meme ID si autre que css => seulement le form
-	charac sera rempli*/
-	let finitSection= document.querySelector('#finitions')
-
-	let inputParentDescription = finitSection.querySelector('#id_parent_description')
-	let inputParentItem = finitSection.querySelector('#id_parent_item')
-	let inputLevel = finitSection.querySelector('#id_level')
-	let inputDescriptionType = finitSection.querySelector('#id_description_type')
-
-	let item=document.getElementById('listFinit')
-	let selectedItem=item.options[item.selectedIndex]
-
-	inputDescriptionType.value='finitions'
-	inputLevel.value=1
-	inputParentItem.value=selectedItem.getAttribute('id')
-	inputParentDescription.value=''
-	inputLevel.value=1
-
-}	
-
-//add eventlistener on the submit button
-let submitCharac = document.getElementById('submitCharac')
-submitCharac.addEventListener('click',updateFieldsCharac)
-
-
-let submitFinit = document.getElementById('submitFinit')
-submitFinit.addEventListener('click',updateFieldsFinit)
-
-
-//applique un event listener sur chaque liste => qui remplit la liste suivante en fonction de la valeur sélectionnée.
-const displayNextList=()=>{
-
-				for (let i=1; i<description.length; i++) {
-
-    // Obtenir une référence aux éléments de sélection
-					let previousListSelect = document.getElementById(`listCharac${i-1}`);
-					let listCharacSelect = document.getElementById(`listCharac${i}`);
-
-    // Écouter les changements de sélection dans le premier menu déroulant
-					previousListSelect.addEventListener("change", function () {
-						let selectedElem = previousListSelect.options[previousListSelect.selectedIndex];
-						let selectedElemDescription = selectedElem.getAttribute("id");
-						//update description
-						let descriptionContainer = document.getElementById('characDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
-        // Nettoyer le deuxième menu déroulant
-						listCharacSelect.innerHTML = "";
-
-						      let emptyOption = document.createElement("option");
-						      emptyOption.value = '';
-						      emptyOption.text = ''; // Vous pouvez également définir un texte par défaut si nécessaire.
-						      listCharacSelect.appendChild(emptyOption);
-											        // Remplir le deuxième menu déroulant avec les caractéristiques correspondantes
-						description[i].forEach(element=>{
-							
-							if (i>1){
-								if (selectedElemDescription == element.parent_description) {
-									let option = document.createElement("option");
-									option.value = element.name;
-									option.text = element.name;
-									option.setAttribute('id', element.id)
-									option.setAttribute('description', element.description)
-									option.setAttribute('parent_description', element.parent_description)
-									option.setAttribute('parent_item', element.parent_item)
-									listCharacSelect.appendChild(option);}
-
-								}
-								else if(selectedElemDescription == element.parent_item) {
-
-									let option = document.createElement("option");
-									option.value = element.name;
-									option.text = element.name;
-									option.setAttribute('id', element.id)
-									option.setAttribute('description', element.description)
-									option.setAttribute('parent_item', element.parent_item)
-									option.setAttribute('parent_description', element.parent_description)
-									listCharacSelect.appendChild(option);}
-							})
-						for (let j=1; j<description.length+1;j++){
-							if (j<=i){
-								let listsToShow=document.getElementById(`listCharac${j}`)
-								listsToShow.style.visibility='visible'
-							}
-							else {
-								let listsToHide=document.getElementById(`listCharac${j}`)
-								listsToHide.style.visibility='hidden'
-								listsToHide.value=''
-							}
-						}
-					})
-
-				};
-
-}
-
-displayNextList()
-
-
-// applique un event listener sur la liste des items pour afficher les finitions associées.
-displayNextListFinit=()=>{
-
-    // Obtenir une référence aux éléments de sélection
-					let listItemSelect = document.getElementById(`listFinit`);
-					let listFinitSelect = document.getElementById(`listFinit1`);
-
-    // Écouter les changements de sélection dans le premier menu déroulant
-					listItemSelect.addEventListener("change", function () {
-						let selectedElem = listItemSelect.options[listItemSelect.selectedIndex];
-						let selectedElemDescription = selectedElem.getAttribute("id");
-
-					//update description
-						let descriptionContainer = document.getElementById('finitionDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
-        // Nettoyer le deuxième menu déroulant
-						listFinitSelect.innerHTML = "";
-
-						let emptyOption = document.createElement("option");
-						      emptyOption.value = '';
-						      emptyOption.text = ''; // Vous pouvez également définir un texte par défaut si nécessaire.
-						      listFinitSelect.appendChild(emptyOption);
-        // Remplir le deuxième menu déroulant avec les caractéristiques correspondantes
-						finitions.forEach(element=>{
-				
-								if(selectedElemDescription == element.parent_item) {
-
-									let option = document.createElement("option");
-									option.value = element.name;
-									option.text = element.name;
-									option.setAttribute('id', element.id)
-									option.setAttribute('description', element.description)
-									option.setAttribute('parent_description', element.parent_description)
-									
-									listFinitSelect.appendChild(option);}
-
-
-								})
-			
-})
-					listFinitSelect.addEventListener('change',event=>{
-						let selectedElem = listFinitSelect.options[listFinitSelect.selectedIndex];
-						let descriptionContainer = document.getElementById('finitionDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
-					})
-}
-displayNextListFinit()
-
-
-// Fonction de suppression d'un item
-const deleteItem=()=>{
-		let selector = document.getElementById('listElem')
-		item=selector.options[selector.options.selectedIndex]
-		console.log(item)
-		let section= document.querySelector('#object')
-
-		let inputId = section.querySelector('#id_id')
-		inputId.value=item.getAttribute('id')
-
-}
-
-//Fonction de suppression d'une charactéristique (charac ou finit)
-const deleteCharac=()=>{
-		let selectedDescription={}
-	for (let i=1; i<description.length+1; i++) {
-
-
-		let selectList = document.getElementById(`listCharac${i}`)
-
-		if (selectList.value !== '') {
-
-			let selectedOption = selectList.options[selectList.selectedIndex]
-
-				selectedDescription = {
-			  'id': selectedOption.getAttribute('id'),
-			  
-			};
-		}
-		else {
-			continue
-		}
-	}
-
-		let section= document.querySelector('#charac')
-
-
-		let inputId = section.querySelector('#id_id')
-
-		inputId.value=selectedDescription.id
-
-}
-
-const deleteFinit=()=>{
-
-		let selectList = document.getElementById(`listFinit1`)
-
-
-			let selectedOption = selectList.options[selectList.selectedIndex]
-
-				selectedDescription = {
-			  'id': selectedOption.getAttribute('id'),
-			  
-			};
-
-		let section= document.querySelector('#finitions')
-
-
-		let inputId = section.querySelector('#id_id')
-		console.log(inputId)
-		console.log(section)
-		inputId.value=selectedDescription.id
-
-}
-
-//ajoute l'évenement de suppression sur le forms Item
-let submitDeleteItem = document.getElementById('submitItemSuppression')
-submitDeleteItem.addEventListener('click', deleteItem)
-
-
-// ajoute l'evenement de suppression sur le forms Charac
-let submitDeleteCharac = document.getElementById('submitCharacSuppression')
-submitDeleteCharac.addEventListener('click', deleteCharac)
-
-let submitDeleteFinit = document.getElementById('submitFinitSuppression')
-submitDeleteFinit.addEventListener('click', deleteFinit)
-
-// demande la validation de l'utilisateur
-const confirmationAlert=(event)=>{
-	   let confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet élément ?");
+const confirmationAlert=(event, form)=>{
+	   let confirmation = confirm("Êtes-vous sûr de vouloir appliquer ces changements ?");
         
         // Si l'utilisateur annule la confirmation, annuler la soumission du formulaire
         if (!confirmation) {
             event.preventDefault();
         }
+        else{
+        	form.submit()
+        }
 }
 
 
-//applique la fonction sur les 3 forms
-document.getElementById('deleteItem').addEventListener('submit', confirmationAlert)
+const afficherDeleteFormulaire = (cellule,table)=>{
+		let formToFill
+		let inputId
+		let typeOfFormInput
+	switch (table){
 
-document.getElementById('deleteDescription').addEventListener('submit', confirmationAlert)
+	case 'devis':
+		let id_devis = document.getElementById('devis_id').innerText
+		formToFill=document.getElementById('deleteDevisForm')
 
-document.getElementById('deleteFinition').addEventListener('submit', confirmationAlert)
+		inputId=formToFill.querySelector('#id_id')
+		inputId.value=id_devis
+		typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+		typeOfFormInput.value='deleteDevis'
+
+		confirmationAlert(event, formToFill)
+		break
+	case 'description' :
+		id_ligne = cellule.parentElement.getAttribute('lignedescid') 
+	
+		formToFill=document.getElementById('suppressionForms')
+		
+		inputId=formToFill.querySelector('#id_id')
+		inputId.value=id_ligne
+
+		typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+		typeOfFormInput.value='deleteDescription'
+	
+		confirmationAlert(event, formToFill)
+
+		break
+	case 'item' :
+	
+		id_ligne = cellule.parentElement.getAttribute('ligneitemid') 
+	
+		formToFill=document.getElementById('suppressionForms')
+		
+		inputId=formToFill.querySelector('#id_id')
+		inputId.value=id_ligne
+
+		typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+		typeOfFormInput.value='deleteItem'
+	
+		confirmationAlert(event, formToFill)
+		break
+	}
+
+
+}
+
+const afficherAddFormulaire = (cellule, table)=>{
+	let typeOfFormInput
+	let formToFill
+	switch (table) { 
+		case 'description' :
+			id_item = cellule.parentElement.getAttribute('ligneitemid')
+		formToFill=document.getElementById('addDescriptionForm')
+
+		userInput = prompt(`caractéristique à ajouter à l'objet `)
+		if (userInput!== null) {
+			textCustom=userInput
+
+			let inputId_item = formToFill.querySelector('#id_LignesItemsDevisId')
+			inputId_item.value = id_item
+			let inputId_textCustom = formToFill.querySelector('#id_textCustom')
+			inputId_textCustom.value = textCustom
+			typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+			typeOfFormInput.value='addDescription'
+
+			confirmationAlert(event, formToFill)
+			break
+		}
+
+		case 'item' :
+
+			formToFill=document.getElementById('createLineItemForm')
+			let id_devis=document.getElementById('devis_id').innerText
+
+			userInput = prompt(`nom de l'objet objet à ajouter au devis`)
+			if (userInput!== null){
+				let inputId_devis = formToFill.querySelector('#id_devisId')
+				inputId_devis.value = id_devis
+				let inputTextCustom = formToFill.querySelector('#id_textCustom')
+				inputTextCustom.value = userInput
+				typeOfFormInput = formToFill.querySelector('#id_formulaire_id')
+				typeOfFormInput.value = 'addItem'
+
+			}
+			confirmationAlert(event, formToFill)
+			break
+
+
+	}
+
+
+}
+
+const afficherModifyFormulaire = (cellule,table)=>{
+	let typeOfFormInput
+	let formToFill
+	switch (table){
+	case 'devis':
+		let id_devis = document.getElementById('devis_id').innerText
+		let newStatus = document.getElementById('status').value
+		
+		formToFill=document.getElementById('updateDevisStatusForm')
+	
+		let statusInput = formToFill.querySelector('#id_status')
+		statusInput.value = newStatus
+		let id_devisInput = formToFill.querySelector('#id_id')
+		id_devisInput.value = id_devis
+		typeOfFormInput= formToFill.querySelector('#id_formulaire_id')
+		typeOfFormInput.value = 'updateStatus'
+
+		confirmationAlert(event, formToFill)
+		break
+	case 'item' :
+		if (event.keyCode==13) {
+			
+			let quantite = cellule.firstElementChild.value
+			let id_item = cellule.parentElement.getAttribute('ligneitemid')
+			
+			formToFill=document.getElementById('updateQuantityForm')
+
+			let quantiteInput = formToFill.querySelector('#id_quantity')
+			quantiteInput.value = quantite
+			let idInput = formToFill.querySelector('#id_id')
+			idInput.value = id_item
+			typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+			typeOfFormInput.value = 'updateQuantity'
+
+			confirmationAlert(event, formToFill)
+		}
+
+		break
+	case 'description':
+		let celluleToModify = cellule.previousElementSibling.previousElementSibling
+		let idLigneDescription= cellule.parentElement.getAttribute('lignedescid')
+
+		celluleToModify.innerHTML=`<input id="input_textCustom" type="text" value="${celluleToModify.innerText}"></input>`
+
+		formToFill = document.getElementById('updateDescriptionForm')
+
+		celluleToModify.addEventListener("keypress", (event) =>{
+			if (event.keyCode==13) {
+			let inputId = formToFill.querySelector('#id_id')
+			inputId.value=idLigneDescription
+			let textCustom = document.getElementById('input_textCustom').value
+			let textInput = formToFill.querySelector('#id_textCustom')
+			textInput.value=textCustom
+			typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
+			typeOfFormInput.value='modifyDescription'
+			confirmationAlert(event,formToFill)
+
+	}
+
+
+	})
+		break
+	}
+
+
+}
+console.log(dataset)
+
+//applique un event listener sur le status du devis => sauvegarde automatique
+let selectorStatus = document.getElementById('status')
+
+selectorStatus.addEventListener('change', () =>{
+	afficherModifyFormulaire(null, 'devis')
+})
+
+let date = document.getElementById('date');
+let dateISO = date.innerText;
+let dateObj = new Date(dateISO);
+let formattedDate = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+date.innerText=formattedDate

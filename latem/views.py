@@ -28,7 +28,13 @@ def account(request):
 	if request.user.is_authenticated:
 		if request.user.is_superuser :
 			return redirect('dashboard')
-		return render(request, 'account.html')
+		myId=request.session["id_user"]
+		allMyDevis=DEVIS().getMyCustomerDevis(myId)
+		dataset=[]
+		for devis in allMyDevis :
+			print(devis)
+			dataset.append(DEVIS().initDevis(devis['id']))
+		return render(request, 'account.html', {'listOfData':dataset})
 	else :
 		return redirect('login')
 
@@ -211,4 +217,139 @@ def signup(request):
 		return render(request,'signup.html')
 
 def devis(request,id):
-	return render(request,'devis.html')
+	print(request.POST)
+	
+	if request.method=='POST' :
+
+	# request pour modifier le contenu d'une ligne de description
+		match request.POST.get('formulaire_id') :
+			case 'modifyDescription' :
+				form = updateDescriptionForm(request.POST)
+				if form.is_valid():
+					print(form.cleaned_data)
+					try : 
+						LIGNES_DESC_DEVIS().update(objectId=form.cleaned_data['id'],data={'id':form.cleaned_data['id'],'textCustom':form.cleaned_data['textCustom']})
+					except Exception as error :
+						raise(error)
+
+		# request pour ajouter une ligne de description avec un customText dans le devis	
+			case 'addDescription':
+				form = addDescriptionForm(request.POST)
+				if form.is_valid():
+					print(form.cleaned_data)
+					try : 
+						LIGNES_DESC_DEVIS().create(data=form.cleaned_data)
+					except Exception as error :
+						print(error)
+						raise(error)
+
+
+		# request pour supprimer une ligne de description
+			case 'deleteDescription' :
+				form = descriptionSuppressionForm(request.POST)
+				if form.is_valid():
+					try : 
+						LIGNES_DESC_DEVIS().delete(form.cleaned_data['id'])
+					except Exception as error :
+						print(error)
+						raise(error)
+
+		# requset pour supprimer un item et l'ensemble de ces descriptions
+			case 'deleteItem' :
+				form = itemSuppressionForm(request.POST)
+				if form.is_valid():
+					
+					try : 
+						LIGNES_ITEMS_DEVIS().delete(form.cleaned_data['id'])
+					except Exception as error :
+						print(error)
+						raise(error)
+
+		# requset pour update un item => textCustom
+			case 'updateStatus' :
+				
+				form = updateDevisStatusForm(request.POST)
+				if form.is_valid():
+					
+					try : 
+						DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
+					except Exception as error :
+						print(error)
+						raise(error)
+
+		# requset pour modifier la quantité d'un item 			
+			case 'updateQuantity' :
+				
+				form = updateQuantityForm(request.POST)
+				if form.is_valid():
+					
+					try : 
+						LIGNES_ITEMS_DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
+					except Exception as error :
+						print(error)
+						raise(error)
+		# requset pour modifier la quantité d'un item 			
+			case 'addItem' :
+				
+				form = createLineItemForm(request.POST)
+				if form.is_valid():
+					
+					try : 
+						LIGNES_ITEMS_DEVIS().create(data=form.cleaned_data)
+					except Exception as error :
+						print(error)
+						raise(error)
+		# requset pour modifier la quantité d'un item 			
+			case 'deleteDevis' :
+				
+				form = createLineItemForm(request.POST)
+				if form.is_valid():
+					print('deletedevis')
+					try : 
+						DEVIS().delete(form.cleaned_data['id'])
+					except Exception as error :
+						print(error)
+						raise(error)
+					return redirect('dashboard')
+	
+	dataset = DEVIS().initDevis(id)
+	
+	return render(request,'devis.html', {'data' :dataset, 
+		'forms':{
+		'updateDescriptionForm' : updateDescriptionForm, 
+		'descriptionSuppressionForm': descriptionSuppressionForm,
+		'addDescriptionForm':addDescriptionForm, 
+		'updateDevisStatusForm':updateDevisStatusForm,
+		'updateQuantityForm':updateQuantityForm,
+		'createLineItemForm':createLineItemForm,
+		'deleteDevisForm':deleteDevisForm,
+		}})
+
+
+def configurateur(request):
+	allItems = ITEMS().readAll()
+	allDescriptionData = DESCRIPTION_ITEMS().getAllOrderedByLevel()
+	maxLevel=DESCRIPTION_ITEMS().getMaxLevel()
+	
+	characDescriptions = []
+	finitionsDescriptions= []
+	if maxLevel:
+		for x in range(maxLevel+1):
+			characDescriptions.append([])
+	if allDescriptionData :	
+		for desc_data in allDescriptionData:
+			desc_item= {
+			'id':desc_data['id'],
+			'name':desc_data['name'],
+			'description':desc_data['description'],
+			'apply_on_all_items':desc_data['apply_on_all_items'],
+			'parent_item':desc_data['parent_item'],
+			'description_type':desc_data['description_type'],
+			'parent_description':desc_data['parent_description'],
+			'level':desc_data['level'],
+			}
+			if desc_data['description_type']=='charac':
+				characDescriptions[desc_item['level']].append(desc_item)
+			elif  desc_data['description_type']=='finitions':
+				finitionsDescriptions.append(desc_item)
+	return render(request, 'configurateur.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions,})

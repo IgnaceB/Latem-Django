@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/param.css' %}">
 	{{ description | json_script}}
-	<script src="{% static 'script/param.js' %}" defer></script>
+	<script src="{% static 'script/configurateur.js' %}" defer></script>
 	{{ finitions | json_script}}
 
 	<title>Home</title>
@@ -84,21 +84,6 @@
 		
 			</select>
 			<h5 id='elemDescription'></h5>
-			
-					<form method="post" id="deleteItem" >
-				{% csrf_token %}
-				{{itemSuppressionForm}}
-				<input type="hidden" name="formulaire_id" value="deleteItem">
-				<input type="submit" value="Supprimer" id='submitItemSuppression'>
-			</form>
-				<!-- pour display la description => devis.js => getAttribute -->
-			<h5>Ajouter un objet</h5>
-
-			<form method="post" >
-				{% csrf_token %}
-				{{ItemCreationForm}}
-				<input type="submit" value="Enregistrer">
-			</form>
 		</section>
 <hr/>
 		<section class='charac' id='charac'>
@@ -127,24 +112,6 @@
 			<h5 id='characDescription'> </h5>
 			
 			<!-- pour display dynamiquement les informations => devis.js => displayNextList -->
-		
-
-					<form method="post" id="deleteDescription" >
-				{% csrf_token %}
-				{{descriptionSuppressionForm}}
-				<input type="hidden" name="formulaire_id" value="deleteDescription">
-				<input type="submit" value="Supprimer" id='submitCharacSuppression'>
-			</form>
-			<h5>Ajouter une charactéristique à l'embranchement sélectionné</h5>
-
-			<form method="post" >
-				{% csrf_token %}
-			
-	
-				{{descriptionCreationForm}}
-
-				<input type="submit" value="Enregistrer" id='submitCharac'>
-			</form>
 		
 		</section>
 <hr/>

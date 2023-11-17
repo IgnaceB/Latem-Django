@@ -89,6 +89,11 @@ h1, h2, h3 {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
+  height: 5vh;
+}
+
+#container section th svg, #container section td svg {
+  height: 100%;
 }
 
 #container section th {

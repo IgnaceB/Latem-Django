@@ -31,3 +31,43 @@ class descriptionSuppressionForm(forms.Form):
 class itemSuppressionForm(forms.Form):
     id = forms.CharField(label='id', widget=forms.HiddenInput)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class addDescriptionForm(forms.Form):
+    description_type = 'charac'
+    # parent_devis=forms.IntegerField(label="parent_devis", widget=forms.HiddenInput)
+    LignesItemsDevisId=forms.IntegerField(label="parent_item_id", widget=forms.HiddenInput)
+    textCustom=forms.CharField(label='textCustom', widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class updateDescriptionForm(forms.Form):
+    id = forms.CharField(label='id', widget=forms.HiddenInput)
+    textCustom=forms.CharField(label='textCustom', widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class updateDevisStatusForm(forms.Form):
+    id = forms.CharField(label='id', widget=forms.HiddenInput)
+    status=forms.ChoiceField(  choices = (
+        ('réceptionné', 'Réceptionné'),
+        ('devis envoyé', 'Devis envoyé'),
+        ('validé par le client', 'Validé par le client'),
+        ('payé', 'Payé'),
+        ('réalisé', 'Réalisé'),
+        ('clôturé', 'Clôturé')
+    ),widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class updateQuantityForm(forms.Form):
+    id = forms.IntegerField(label='id', widget=forms.HiddenInput)
+    quantity = forms.IntegerField(label='quantity', widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class createLineItemForm(forms.Form):
+    devisId=forms.IntegerField(label='devisId', widget=forms.HiddenInput)
+    textCustom=forms.CharField(label='textCustom', widget=forms.HiddenInput)
+    quantity = 0
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class deleteDevisForm(forms.Form):
+    id = forms.CharField(label='id', widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+    

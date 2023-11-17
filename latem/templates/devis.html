@@ -7,7 +7,11 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
 	    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        <script src="{% static 'script/devis.js' %}" defer></script>
+        {{data|json_script}}
+     
 	<title>Escaliers</title>
 </head>
 <body>
@@ -57,9 +61,141 @@
   </div>
 </nav>
 		</header>
-		<h1>Escaliers</h1>
-	</section>
+        <table border="1">
+        <tr>
+            <th>ID du devis</th>
+            <th colspan=2 >Statut du devis</th>
+            <th>Date</th>
+            <th colspan=2></th>
+
+        </tr>
+        <tr>
+            <td data-id id='devis_id'>{{ data.devis.id }}</td>
+            <td data-status>
+                <select name="status" id='status'>
+               {% for choice_key, choice_label in forms.updateDevisStatusForm.fields.status.choices %}
+                    <option value="{{ choice_key }}" {% if choice_key == data.devis.status %}selected{% endif %}>{{ choice_label }}</option>
+                {% endfor %}
+            </select>
+            </td>
+            <td data-created-at colspan=2 id='date'>{{ data.devis.created_at }}</td>
+            <td onclick="afficherDeleteFormulaire(this,'devis')" colspan=2>D</td>
+            
+        </tr>
+
+                 <tr>
+                <th colspan=3>Type d'objet</th>
+                <th>Q</th>
+                <th onclick="afficherAddFormulaire(this,'item')" colspan=2>A</th>
+                
+           
+            </tr>
+        {% for ligne in data.lignesItems %}
+
+            {%if ligne.textCustom is not None%}
+                 <tr ligneItemId='{{ligne.id}}'>
+                        <td data-item-name colspan=3>{{ ligne.textCustom }}</td>
+                        <td data-quantity onkeypress="afficherModifyFormulaire(this,'item')"><input type='number' value='{{ ligne.quantity }}' pattern="[0-9]"></td>
+                        <td onclick="afficherDeleteFormulaire(this,'item')">D</td>
+                        <td onclick="afficherAddFormulaire(this,'description')">A</td>
+                    </tr>
+                    <tr>
+            {%else%}
+                {%for items in data.items %}
+                    {%if items.id == ligne.itemId %}
+                        <tr ligneItemId='{{ligne.id}}'>
+                            <td data-item-name colspan=3>{{ items.name }}</td>
+                            <td data-quantity class='quantite' onkeypress="afficherModifyFormulaire(this,'item')"><input type='number' value='{{ ligne.quantity }}' pattern="[0-9]"></td>
+                            <td onclick="afficherDeleteFormulaire(this,'item')">D</td>
+                            <td onclick="afficherAddFormulaire(this,'description')">A</td>
+                        </tr>
+                     
+                    {%endif%}
+                {% endfor %}
+            {%endif%}
+                 
+            {% for levelLignesDesc in data.lignesDescription %}
+                {%for lignesDesc in levelLignesDesc%}
+                    {%if lignesDesc.LignesItemsDevisId == ligne.id %}
+                        {%if lignesDesc.textCustom is not None%}
+                            <tr ligneDescId='{{lignesDesc.id}}' ligneItemId='{{ligne.id}}'>
+                                <td></td>
+                                <td data-description-name colspan=3>{{ lignesDesc.textCustom }}</td>
+                                <td onclick="afficherDeleteFormulaire(this,'description')">D</td>
+                                <td onclick="afficherModifyFormulaire(this,'description')">M</td>
+                            </tr>
+                        {%else%}
+                            {% for desc in data.description %}
+                                {% if lignesDesc.descriptionItems == desc.id %}
+                                    <tr ligneDescId='{{lignesDesc.id}}' ligneItemId='{{ligne.id}}'>
+                                        <td></td>
+                                        <td data-description-name colspan=3>{{ desc.name }}</td>
+                                        <td onclick="afficherDeleteFormulaire(this,'description')">D</td>
+                                        <td onclick="afficherModifyFormulaire(this,'description')">M</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {%endfor%}
+        {% endfor %}
+    </table>
+
+    <h2>Client</h2>
+    <table border="1">
+        <tr>
+            <th>ID du client</th>
+            <th>Nom du client</th>
+            <th>Email du client</th>
+        </tr>
+        <tr>
+            <td data-client-id>{{ data.client.id }}</td>
+            <td data-client-name>{{ data.client.firstName }} {{ data.client.lastName }}</td>
+            <td data-client-email>{{ data.client.email }}</td>
+        </tr>
+    </table>
+    <form id='suppressionForms' method='POST'>
+        {% csrf_token %}
+    {{forms.descriptionSuppressionForm}}
+
+<input type="submit" style='display:none'>
+</form>
+    <form id='updateDescriptionForm' method='POST'>
+    {% csrf_token %}
+    {{forms.updateDescriptionForm}}
+<input type="submit" style='display:none'>
+
+</form>
+    <form id='addDescriptionForm' method='POST'>
+    {% csrf_token %}
+    {{forms.addDescriptionForm}}
+<input type="submit" style='display:none'>
+</form>
+    <form id='updateDevisStatusForm' method='POST'>
+    {% csrf_token %}
+    {{forms.updateDevisStatusForm}}
+<input type="submit" style='display:none'>
+
+
+</form>
+    <form id='updateQuantityForm' method='POST'>
+    {% csrf_token %}
+    {{forms.updateQuantityForm}}
+<input type="submit" style='display:none'>
+</form>
+    <form id='createLineItemForm' method='POST'>
+    {% csrf_token %}
+    {{forms.createLineItemForm}}
+<input type="submit" style='display:none'>
+</form>
+    <form id='deleteDevisForm' method='POST'>
+    {% csrf_token %}
+    {{forms.deleteDevisForm}}
+<input type="submit" style='display:none'>
+</form>
 </body>
+
 <footer>
 </footer>
 </div>	
