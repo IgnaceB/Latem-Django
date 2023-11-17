@@ -74,6 +74,8 @@ header nav ul li svg {
 section {
   margin-right: 3vw;
   margin-left: 3vw;
+  width: 94vw;
+  overflow: scroll;
 }
 
 section table {

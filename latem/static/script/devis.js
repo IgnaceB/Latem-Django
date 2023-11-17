@@ -110,7 +110,7 @@ const afficherAddFormulaire = (cellule, table)=>{
 
 }
 
-const afficherModifyFormulaire = (cellule,table)=>{
+const afficherModifyFormulaire = (event,cellule,table)=>{
 	let typeOfFormInput
 	let formToFill
 	switch (table){
@@ -130,8 +130,9 @@ const afficherModifyFormulaire = (cellule,table)=>{
 		confirmationAlert(event, formToFill)
 		break
 	case 'item' :
-		if (event.keyCode==13) {
-			
+		console.log(event.key)
+		if (event.keyCode==13 || event.keyCode==9) {
+			event.preventDefault()
 			let quantite = cellule.firstElementChild.value
 			let id_item = cellule.parentElement.getAttribute('ligneitemid')
 			
@@ -158,7 +159,8 @@ const afficherModifyFormulaire = (cellule,table)=>{
 		formToFill = document.getElementById('updateDescriptionForm')
 
 		celluleToModify.addEventListener("keypress", (event) =>{
-			if (event.keyCode==13) {
+			if (event.keyCode==13 || event.keyCode==9) {
+			event.preventDefault()
 			let inputId = formToFill.querySelector('#id_id')
 			inputId.value=idLigneDescription
 			let textCustom = document.getElementById('input_textCustom').value
