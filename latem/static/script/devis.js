@@ -1,5 +1,5 @@
 let dataset = JSON.parse(document.currentScript.nextElementSibling.textContent)
-
+let alreadyModifying=0
 const confirmationAlert=(event, form)=>{
 	   let confirmation = confirm("Êtes-vous sûr de vouloir appliquer ces changements ?");
         
@@ -149,10 +149,11 @@ const afficherModifyFormulaire = (cellule,table)=>{
 
 		break
 	case 'description':
+		alreadyModifying++
 		let celluleToModify = cellule.previousElementSibling.previousElementSibling
 		let idLigneDescription= cellule.parentElement.getAttribute('lignedescid')
-
-		celluleToModify.innerHTML=`<input id="input_textCustom" type="text" value="${celluleToModify.innerText}"></input>`
+		if (alreadyModifying<=1){
+			celluleToModify.innerHTML=`<input id="input_textCustom" type="text" value="${celluleToModify.innerText}"></input>`
 
 		formToFill = document.getElementById('updateDescriptionForm')
 
@@ -166,17 +167,21 @@ const afficherModifyFormulaire = (cellule,table)=>{
 			typeOfFormInput=formToFill.querySelector('#id_formulaire_id')
 			typeOfFormInput.value='modifyDescription'
 			confirmationAlert(event,formToFill)
+			alreadyModifying=0
 
 	}
+		})
+	}
+	else {
+		alert("veuillez enregistrer d'abord les modifications")
+	}
 
-
-	})
 		break
 	}
 
 
 }
-console.log(dataset)
+
 
 //applique un event listener sur le status du devis => sauvegarde automatique
 let selectorStatus = document.getElementById('status')

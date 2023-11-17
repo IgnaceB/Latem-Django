@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/devis.css' %}">
         <script src="{% static 'script/devis.js' %}" defer></script>
         {{data|json_script}}
      
@@ -61,32 +61,43 @@
   </div>
 </nav>
 		</header>
+        <section>
         <table border="1">
         <tr>
-            <th>ID du devis</th>
+            <th>N°devis</th>
             <th colspan=2 >Statut du devis</th>
-            <th>Date</th>
+            <th class='date'>Date</th>
             <th colspan=2></th>
 
         </tr>
         <tr>
             <td data-id id='devis_id'>{{ data.devis.id }}</td>
-            <td data-status>
+            <td data-status class='inputContainer' colspan=2>
                 <select name="status" id='status'>
                {% for choice_key, choice_label in forms.updateDevisStatusForm.fields.status.choices %}
                     <option value="{{ choice_key }}" {% if choice_key == data.devis.status %}selected{% endif %}>{{ choice_label }}</option>
                 {% endfor %}
             </select>
             </td>
-            <td data-created-at colspan=2 id='date'>{{ data.devis.created_at }}</td>
-            <td onclick="afficherDeleteFormulaire(this,'devis')" colspan=2>D</td>
+            <td data-created-at id='date'>{{ data.devis.created_at }}</td>
+            <td onclick="afficherDeleteFormulaire(this,'devis')" colspan=2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+
+            </td>
             
         </tr>
 
                  <tr>
                 <th colspan=3>Type d'objet</th>
                 <th>Q</th>
-                <th onclick="afficherAddFormulaire(this,'item')" colspan=2>A</th>
+                <th onclick="afficherAddFormulaire(this,'item')" colspan=2>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="green" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+
+                </th>
                 
            
             </tr>
@@ -94,20 +105,37 @@
 
             {%if ligne.textCustom is not None%}
                  <tr ligneItemId='{{ligne.id}}'>
-                        <td data-item-name colspan=3>{{ ligne.textCustom }}</td>
-                        <td data-quantity onkeypress="afficherModifyFormulaire(this,'item')"><input type='number' value='{{ ligne.quantity }}' pattern="[0-9]"></td>
-                        <td onclick="afficherDeleteFormulaire(this,'item')">D</td>
-                        <td onclick="afficherAddFormulaire(this,'description')">A</td>
+                        <td data-item-name colspan=3 >{{ ligne.textCustom }}</td>
+                        <td data-quantity class='quantite' onkeypress="afficherModifyFormulaire(this,'item')"><input type='number' value='{{ ligne.quantity }}' pattern="[0-9]"></td>
+                        <td onclick="afficherDeleteFormulaire(this,'item')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+
+                        </td>
+                        <td onclick="afficherAddFormulaire(this,'description')">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="green" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        </td>
                     </tr>
-                    <tr>
+                
             {%else%}
                 {%for items in data.items %}
                     {%if items.id == ligne.itemId %}
                         <tr ligneItemId='{{ligne.id}}'>
                             <td data-item-name colspan=3>{{ items.name }}</td>
                             <td data-quantity class='quantite' onkeypress="afficherModifyFormulaire(this,'item')"><input type='number' value='{{ ligne.quantity }}' pattern="[0-9]"></td>
-                            <td onclick="afficherDeleteFormulaire(this,'item')">D</td>
-                            <td onclick="afficherAddFormulaire(this,'description')">A</td>
+                            <td onclick="afficherDeleteFormulaire(this,'item')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </td>
+                            <td onclick="afficherAddFormulaire(this,'description')">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="green" class="w-6 h-6">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                            </td>
                         </tr>
                      
                     {%endif%}
@@ -121,8 +149,17 @@
                             <tr ligneDescId='{{lignesDesc.id}}' ligneItemId='{{ligne.id}}'>
                                 <td></td>
                                 <td data-description-name colspan=3>{{ lignesDesc.textCustom }}</td>
-                                <td onclick="afficherDeleteFormulaire(this,'description')">D</td>
-                                <td onclick="afficherModifyFormulaire(this,'description')">M</td>
+                                <td onclick="afficherDeleteFormulaire(this,'description')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </td>
+                                <td onclick="afficherModifyFormulaire(this,'description')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                                    </svg>
+
+                                </td>
                             </tr>
                         {%else%}
                             {% for desc in data.description %}
@@ -130,7 +167,12 @@
                                     <tr ligneDescId='{{lignesDesc.id}}' ligneItemId='{{ligne.id}}'>
                                         <td></td>
                                         <td data-description-name colspan=3>{{ desc.name }}</td>
-                                        <td onclick="afficherDeleteFormulaire(this,'description')">D</td>
+                                        <td onclick="afficherDeleteFormulaire(this,'description')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                                              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+
+                                        </td>
                                         <td onclick="afficherModifyFormulaire(this,'description')">M</td>
                                     </tr>
                                 {% endif %}
@@ -141,7 +183,8 @@
             {%endfor%}
         {% endfor %}
     </table>
-
+</section>
+<section>
     <h2>Client</h2>
     <table border="1">
         <tr>
@@ -155,6 +198,7 @@
             <td data-client-email>{{ data.client.email }}</td>
         </tr>
     </table>
+</section>
     <form id='suppressionForms' method='POST'>
         {% csrf_token %}
     {{forms.descriptionSuppressionForm}}

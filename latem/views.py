@@ -217,7 +217,7 @@ def signup(request):
 		return render(request,'signup.html')
 
 def devis(request,id):
-	print(request.POST)
+	
 	
 	if request.method=='POST' :
 
@@ -303,7 +303,7 @@ def devis(request,id):
 			case 'deleteDevis' :
 				
 				form = deleteDevisForm(request.POST)
-				
+
 				if form.is_valid():
 					print('deletedevis')
 					try : 

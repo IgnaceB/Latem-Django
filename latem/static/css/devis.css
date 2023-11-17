@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+body {
+  width: 100vw;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  overflow: hidden;
+}
+
+.wrapper {
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  height: 40vw;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+header .logo img {
+  max-width: 100%;
+  max-height: 130px;
+}
+
+header nav {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  left: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  background: black;
+  width: 100%;
+}
+
+header nav ul {
+  display: flex;
+  margin: 10px;
+}
+
+header nav ul li {
+  width: 30%;
+  height: 3vh;
+}
+
+header nav ul li svg {
+  height: 100%;
+}
+
+section {
+  margin-right: 3vw;
+  margin-left: 3vw;
+}
+
+section table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+}
+
+section th,
+section td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  height: 5vh;
+}
+
+section th svg,
+section td svg {
+  height: 100%;
+}
+
+section th input,
+section td input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 10px;
+}
+
+section th select,
+section td select {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+section th select option,
+section td select option {
+  width: 50px;
+  height: auto;
+  color: red;
+}
+
+section .date {
+  width: 10%;
+}
+
+section .inputContainer {
+  padding: 0px;
+}
+
+section .quantite {
+  padding: 0px;
+}
+
+section th {
+  background-color: #333;
+  color: white;
+}
+
+section tr:hover {
+  background-color: #f5f5f5;
+}
+
+section a {
+  text-decoration: none;
+  color: #333;
+}
+
+section a:hover {
+  text-decoration: underline;
+}
+
+section button {
+  padding: 10px 20px;
+  background-color: black;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+section button:hover {
+  background-color: grey;
+}
+
+section .subNav {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+footer {
+  height: 10vh;
+}
