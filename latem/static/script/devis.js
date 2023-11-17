@@ -189,7 +189,7 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 let selectorStatus = document.getElementById('status')
 
 selectorStatus.addEventListener('change', () =>{
-	afficherModifyFormulaire(null, 'devis')
+	afficherModifyFormulaire(null,null, 'devis')
 })
 
 let date = document.getElementById('date');
