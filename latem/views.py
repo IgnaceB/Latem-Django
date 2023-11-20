@@ -227,23 +227,7 @@ def signup(request):
 		return render(request,'signup.html')
 
 def devis(request,id):
-	try :
-		
-		dbx = dropbox.Dropbox(env('DROPBOX_ACCESS_TOKEN'))
-		folder_name = f'devis{id}'
-
-		try :
-			folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
-		except ApiError as e:
-			dbx.files_create_folder('/' + folder_name)
-			print(f"API error: {e}")
-
-		link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
-		dropboxUrl = link.url.replace('?dl=0', '')
-
-	except AuthError as e:
-		print(f"Authentication error: {e}")
-
+	print(request.POST)
 	if request.method=='POST' :
 
 	# request pour modifier le contenu d'une ligne de description
@@ -334,7 +318,7 @@ def devis(request,id):
 					try : 
 						DEVIS().delete(form.cleaned_data['id'])
 					except Exception as error :
-						print(error)
+						
 						raise(error)
 					return redirect('dashboard')
 			case 'sendEmail':
@@ -351,6 +335,38 @@ def devis(request,id):
 					print(response.headers)
 				except Exception as e:
 					print(e.message)
+			case 'dropbox' :
+				dataset = DEVIS().initDevis(id)
+				try :
+				
+					dbx = dropbox.Dropbox(env('DROPBOX_ACCESS_TOKEN'))
+					folder_name = f'devis{id}'
+
+					try :
+						folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
+					except ApiError as e:
+						dbx.files_create_folder('/' + folder_name)
+						print(f"API error: {e}")
+
+					link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
+					print(link)
+					dropboxUrl = link.url[:len(link.url)-5]
+					print(dropboxUrl)
+					return render(request,'devis.html', {'data' :dataset, 
+					'forms':{
+					'updateDescriptionForm' : updateDescriptionForm, 
+					'descriptionSuppressionForm': descriptionSuppressionForm,
+					'addDescriptionForm':addDescriptionForm, 
+					'updateDevisStatusForm':updateDevisStatusForm,
+					'updateQuantityForm':updateQuantityForm,
+					'createLineItemForm':createLineItemForm,
+					'deleteDevisForm':deleteDevisForm,
+					}, 'dropboxUrl':dropboxUrl,})
+
+				except AuthError as e:
+					print(f"Authentication error: {e}")
+
+
 				
 	dataset = DEVIS().initDevis(id)
 	
@@ -363,8 +379,7 @@ def devis(request,id):
 		'updateQuantityForm':updateQuantityForm,
 		'createLineItemForm':createLineItemForm,
 		'deleteDevisForm':deleteDevisForm,
-		},
-		'dropboxUrl':dropboxUrl})
+		}, 'dropboxUrl':'',})
 
 
 def configurateur(request):

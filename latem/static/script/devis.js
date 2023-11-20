@@ -190,7 +190,22 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 
 
 }
+/*const openDropbox= async ()=> {
+	 let csrf_token = $("#dropbox [name=csrfmiddlewaretoken]").val()
+	 console.log(csrf_token)
+    // Effectuer une requête AJAX au backend pour obtenir l'URL Dropbox
+	 const response = await fetch(window.location.href, {
 
+        method: 'POST',
+        headers: {
+              	'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': csrf_token,
+        }       })
+	 console.log('test')
+ 	const data = await response.json()
+ 	console.log(data)
+    window.open(data.dropboxUrl, '_blank');
+}*/
 
 //applique un event listener sur le status du devis => sauvegarde automatique
 let selectorStatus = document.getElementById('status')
