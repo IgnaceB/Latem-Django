@@ -7,6 +7,12 @@ from .forms import *
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators import gzip
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import dropbox
+from dropbox.exceptions import AuthError, ApiError
+import logging
 
 # import cv2
 import requests
@@ -16,6 +22,10 @@ import time
 from .serializers import UserSerializer
 from .models import Users
 from .controlers import *
+
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 def home(request) :
 
@@ -217,8 +227,22 @@ def signup(request):
 		return render(request,'signup.html')
 
 def devis(request,id):
-	
-	
+	try :
+		
+		dbx = dropbox.Dropbox(env('DROPBOX_ACCESS_TOKEN'))
+		folder_name = f'devis{id}'
+		try :
+			dbx.files_create_folder('/' + folder_name)
+		except ApiError as e:
+			print(f"API error: {e}")
+
+		folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
+		link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
+		dropboxUrl = link.url.replace('?dl=0', '')
+
+	except AuthError as e:
+		print(f"Authentication error: {e}")
+
 	if request.method=='POST' :
 
 	# request pour modifier le contenu d'une ligne de description
@@ -270,7 +294,7 @@ def devis(request,id):
 				
 				form = updateDevisStatusForm(request.POST)
 				if form.is_valid():
-					
+					print(form.cleaned_data)
 					try : 
 						DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
 					except Exception as error :
@@ -312,7 +336,21 @@ def devis(request,id):
 						print(error)
 						raise(error)
 					return redirect('dashboard')
-	
+			case 'sendEmail':
+				message = Mail(
+				from_email='from_email@example.com',
+				to_emails='to@example.com',
+				subject='Sending with Twilio SendGrid is Fun',
+				html_content='<strong>and easy to do anywhere, even with Python</strong>')
+				try:
+					sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+					response = sg.send(message)
+					print(response.status_code)
+					print(response.body)
+					print(response.headers)
+				except Exception as e:
+					print(e.message)
+				
 	dataset = DEVIS().initDevis(id)
 	
 	return render(request,'devis.html', {'data' :dataset, 
@@ -324,7 +362,8 @@ def devis(request,id):
 		'updateQuantityForm':updateQuantityForm,
 		'createLineItemForm':createLineItemForm,
 		'deleteDevisForm':deleteDevisForm,
-		}})
+		},
+		'dropboxUrl':dropboxUrl})
 
 
 def configurateur(request):

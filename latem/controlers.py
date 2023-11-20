@@ -41,7 +41,7 @@ class CRUD:
 			serializer.save()
 			return 'ok'
 		else : 
-			raise serializer.errors
+			# raise serializer.errors
 			print(serializer.errors)
 
 	def readOne (self, objectId) :

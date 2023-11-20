@@ -175,3 +175,29 @@ section .subNav {
 footer {
   height: 10vh;
 }
+
+.subNav {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.subNav a {
+  min-width: 25%;
+}
+
+.subNav button {
+  padding: 10px 20px;
+  background-color: black;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.subNav button:hover {
+  background-color: grey;
+}

@@ -115,8 +115,12 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 	let formToFill
 	switch (table){
 	case 'devis':
+		if (event==null || event.keyCode==13 || event.key==='Tab' || event.keyCode ==229){
+			
+		
 		let id_devis = document.getElementById('devis_id').innerText
 		let newStatus = document.getElementById('status').value
+		let newTotal=document.getElementById('total').value
 		
 		formToFill=document.getElementById('updateDevisStatusForm')
 	
@@ -124,10 +128,13 @@ const afficherModifyFormulaire = (event,cellule,table)=>{
 		statusInput.value = newStatus
 		let id_devisInput = formToFill.querySelector('#id_id')
 		id_devisInput.value = id_devis
+		let totalInput = formToFill.querySelector('#id_total')
+		totalInput.value=newTotal
 		typeOfFormInput= formToFill.querySelector('#id_formulaire_id')
 		typeOfFormInput.value = 'updateStatus'
 
 		confirmationAlert(event, formToFill)
+	}
 		break
 	case 'item' :
 	
@@ -197,3 +204,8 @@ let dateISO = date.innerText;
 let dateObj = new Date(dateISO);
 let formattedDate = dateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 date.innerText=formattedDate
+
+const sendEmail=()=>{
+	let tableDevis=document.getElementById('tableDevis')
+	console.log(tableDevis.innerHTML)
+}

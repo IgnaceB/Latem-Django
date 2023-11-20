@@ -62,12 +62,12 @@
 </nav>
 		</header>
         <section>
-        <table border="1">
+        <table border="1" id='tableDevis'>
         <tr>
             <th>N°devis</th>
             <th colspan=2 >Statut du devis</th>
             <th class='date'>Date</th>
-            <th colspan=2></th>
+            <th colspan=2 style='width:20%'></th>
 
         </tr>
         <tr>
@@ -188,6 +188,13 @@
                 {%endfor%}
             {%endfor%}
         {% endfor %}
+        <tr>
+            <th colspan=3>Total </th>
+            <td data-quantity class='quantite' onkeydown="afficherModifyFormulaire(event, this,'devis')" colspan=2><input type='number' value='{{ data.devis.total }}' id='total'>
+            </td>
+            <td>€</td>
+        </tr>
+
     </table>
 </section>
 <section>
@@ -205,6 +212,16 @@
         </tr>
     </table>
 </section>
+        <div class="subNav">
+        <a href="{% url 'dashboard' %}">
+            <button>Dashboard</button></a>
+    <a href="{{dropboxUrl}}" target="_blank"><button>DropBox</button></a>
+</div>
+<div class="subNav">
+
+        <a href="{% url 'dashboard' %}">
+            <button>Envoyer Email Devis</button></a>
+</div>
     <form id='suppressionForms' method='POST'>
         {% csrf_token %}
     {{forms.descriptionSuppressionForm}}

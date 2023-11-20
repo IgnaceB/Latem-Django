@@ -45,6 +45,7 @@ class Devis(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status =models.CharField(max_length=100, choices=STATUS_CHOICES, default='réceptionné')
     responsableId = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='devis_responsable', blank=True, null=True)
+    total = models.IntegerField(null=True, blank=True, default=0)
     class Meta :
         ordering = ['id']  
 

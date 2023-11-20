@@ -53,7 +53,8 @@ class updateDevisStatusForm(forms.Form):
         ('payé', 'Payé'),
         ('réalisé', 'Réalisé'),
         ('clôturé', 'Clôturé')
-    ),widget=forms.HiddenInput)
+    ),widget=forms.HiddenInput, required=False)
+    total=forms.CharField(widget=forms.HiddenInput, required=False)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
 
 class updateQuantityForm(forms.Form):
@@ -71,3 +72,8 @@ class deleteDevisForm(forms.Form):
     id = forms.CharField(label='id', widget=forms.HiddenInput)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
     
+class sendEmailDevis(forms.Form):
+    from_email='from_email@example.com'
+    to_emails=forms.CharField(widget=forms.HiddenInput)
+    subject='Sending with Twilio SendGrid is Fun'        
+    html_content=forms.CharField(widget=forms.HiddenInput)

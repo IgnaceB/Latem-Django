@@ -38,8 +38,11 @@ webencodings==0.5.1
 whitenoise==6.6.0
 Willow==1.6.2
 more-itertools==10.1.0
-
 gunicorn==21.2.0
 whitenoise[brotli]>=6.0,<7.0
-
-
+python-http-client==3.3.7 
+sendgrid==6.10.0 
+starkbank-ecdsa==2.2.0
+dropbox==11.36.2 
+ply==3.11 
+stone==3.3.1
