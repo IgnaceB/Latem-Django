@@ -231,12 +231,13 @@ def devis(request,id):
 		
 		dbx = dropbox.Dropbox(env('DROPBOX_ACCESS_TOKEN'))
 		folder_name = f'devis{id}'
+
 		try :
-			dbx.files_create_folder('/' + folder_name)
+			folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
 		except ApiError as e:
+			dbx.files_create_folder('/' + folder_name)
 			print(f"API error: {e}")
 
-		folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
 		link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
 		dropboxUrl = link.url.replace('?dl=0', '')
 
