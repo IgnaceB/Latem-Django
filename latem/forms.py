@@ -56,6 +56,7 @@ class updateDevisStatusForm(forms.Form):
     ),widget=forms.HiddenInput, required=False)
     total=forms.CharField(widget=forms.HiddenInput, required=False)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+    responsableId = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
 class updateQuantityForm(forms.Form):
     id = forms.IntegerField(label='id', widget=forms.HiddenInput)

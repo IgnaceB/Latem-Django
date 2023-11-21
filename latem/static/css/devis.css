@@ -15,13 +15,13 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background-color: white;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .wrapper {
   overflow: scroll;
   width: 100vw;
-  height: 100vh;
+  height: auto;
 }
 
 header {
@@ -78,10 +78,14 @@ section {
   overflow: scroll;
 }
 
+section h2 {
+  margin: 0;
+}
+
 section table {
   border-collapse: collapse;
   width: 100%;
-  margin: 0;
+  margin: 20px 0;
 }
 
 section th,
@@ -96,6 +100,7 @@ section th svg,
 section td svg {
   height: 100%;
   display: flex;
+  cursor: pointer;
 }
 
 section th input,
@@ -200,4 +205,8 @@ footer {
 
 .subNav button:hover {
   background-color: grey;
+}
+
+.responsable th {
+  width: 50%;
 }

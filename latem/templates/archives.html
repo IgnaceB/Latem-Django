@@ -60,56 +60,24 @@
 			</nav>
 		</header>
 		<section id="container">
-		<h1>Dashboard</h1>
-		<h2>Bonjour {{ me.firstName }}</h2>
-		<section class='nouveauxDevis'>
-			<h3> Nouveaux Devis </h3>
-			  
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Client</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for devis in newDevis %}
-                <tr>
-                    <td>{{ devis.id }}</td>
-                    <td>{{ devis.client.firstName }}</td>
-                    <td>{{ devis.status }}</td>
-                    <td>
-                        <a href="{% url 'devis' id=devis.id%}">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-</svg>
 
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-		</section>
 		<section class='mesDevis'>
-			<h3> Mes Devis </h3>
+			<h3> Archives </h3>
 			    <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Client</th>
-                <th>Status</th>
+                <th>Total</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for devis in myDevis %}
+            {% for devis in archives %}
                 <tr>
                     <td>{{ devis.id }}</td>
                     <td>{{ devis.client.firstName }}</td>
-                    <td>{{ devis.status }}</td>
+                    <td>{{ devis.total }}</td>
                     <td>
                         <a href="{% url 'devis' id=devis.id %}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -122,46 +90,6 @@
             {% endfor %}
         </tbody>
     </table>
-		</section>
-		<section class='autresDevis'>
-			<h3> Autres Devis </h3>
-						    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Client</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for devis in otherDevis %}
-                <tr>
-                    <td>{{ devis.id }}</td>
-                    <td>{{ devis.client.firstName }}</td>
-                    <td>{{ devis.status }}</td>
-                    <td>
-                        <a href="{% url 'devis' id=devis.id%}">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-</svg>
-
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-		</section>
-		<div class="subNav">
-		<a href="{% url 'param' %}">
-			<button>paramètres</button>
-		</a>
-		<a href="{% url 'logout' %}"><button>Nouveau Client</button></a>
-		<a href="{% url 'logout' %}"><button>Nouveau Devis</button></a>
-		<a href="{% url 'archives' %}"><button>Archives</button></a>
-		<a href="{% url 'logout' %}"><button>Déconnexion</button></a>
-</div>
 	</body>
 	<footer>
 	</footer>

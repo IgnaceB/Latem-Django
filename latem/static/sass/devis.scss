@@ -16,13 +16,13 @@ body {
 	margin: 0;
 	font-family: 'Poppins', sans-serif;
 	background-color: white;
-	overflow: hidden;
+	overflow: scroll;
 }
 
 .wrapper {
 	overflow: scroll;
 	width: 100vw;
-	height: 100vh;
+	height: auto;
 }
 
 header {
@@ -75,11 +75,13 @@ section {
 	margin-left: 3vw;
 	width: 94vw;
 	overflow: scroll;
-
+	h2{
+		margin:0;
+	}
 	table {
 		border-collapse: collapse;
 		width: 100%;
-		margin: 0;
+		margin: 20px 0;
 	}
 
 	th,
@@ -91,6 +93,7 @@ section {
 		svg {
 			height: 100%;
 			display:flex;
+			cursor : pointer;
 		}
 		input{
 			width: 100%;
@@ -189,5 +192,8 @@ button:hover {
     background-color: grey;
 }
     }
-
- 
+.responsable{
+	th{
+		width:50%;
+	}
+ }	

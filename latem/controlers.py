@@ -85,20 +85,23 @@ class DEVIS(CRUD):
 		self.serializer=DevisSerializer
 		self.table=Devis
 	def getNewDevis(self):
+		self.serializer=DevisClientSerializer
 		try : 
-			objectsToRead = self.table.objects.filter(Q(responsableId__isnull=True) & ~Q(status='cloturé'))
+			objectsToRead = self.table.objects.filter(Q(responsableId__isnull=True) & ~Q(status='clôturé')).select_related('clientId')
 		except self.table.DoesNotExist:
 			return ''
 		objectsReadable = self.serializer(objectsToRead, many=True)
 		return objectsReadable.data
 	def getMyDevis(self, id):
+		self.serializer=DevisClientSerializer
 		try : 
-			objectsToRead = self.table.objects.filter(Q(responsableId=id) & ~Q(status='cloturé'))
+			objectsToRead = self.table.objects.filter(Q(responsableId=id) & ~Q(status='clôturé')).select_related('clientId')
 		except self.table.DoesNotExist:
 			return ''
 		objectsReadable = self.serializer(objectsToRead, many=True)
 		return objectsReadable.data
 	def getMyCustomerDevis(self, id):
+
 		try : 
 			objectsToRead = self.table.objects.filter(clientId=id)
 		except self.table.DoesNotExist:
@@ -107,12 +110,23 @@ class DEVIS(CRUD):
 		return objectsReadable.data
 
 	def getOtherDevis(self, id):
+		self.serializer=DevisClientSerializer
 		try : 
-			objectsToRead = self.table.objects.filter(~Q(responsableId=id) & ~Q(status='cloturé'))
+			objectsToRead = self.table.objects.filter(~Q(responsableId=id) & ~Q(status='clôturé')& ~Q(responsableId__isnull=True)).select_related('clientId')
 		except self.table.DoesNotExist:
 			return ''
 		objectsReadable = self.serializer(objectsToRead, many=True)
 		return objectsReadable.data
+
+	def getArchivedDevis(self):
+		self.serializer=DevisClientSerializer
+		try : 
+			objectsToRead = self.table.objects.filter(status='clôturé').select_related('clientId')
+		except self.table.DoesNotExist:
+			return ''
+		objectsReadable = self.serializer(objectsToRead, many=True)
+		return objectsReadable.data
+
 	def initDevis(self, id):
 		try : 
 			devis = self.table.objects.get(id=id)

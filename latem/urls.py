@@ -30,5 +30,6 @@ urlpatterns = [
     path('dashboard',views.dashboard, name='dashboard'),
     path('param', views.param, name='param'),
     path('devis/<int:id>/', views.devis, name='devis'),
+    path('archives',views.archives, name='archives'),
     
 ]

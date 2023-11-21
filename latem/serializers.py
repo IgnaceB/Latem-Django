@@ -18,9 +18,21 @@ class DescriptionItemsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DevisSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Devis
         fields = '__all__'
+
+class MyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ('firstName','lastName')
+
+class DevisClientSerializer(serializers.ModelSerializer):
+    client=MyUserSerializer(source='clientId')
+    class Meta:
+        model = Devis
+        fields = ('id','clientId','created_at','status','responsableId','total','client')
 
 class DevisFileSerializer(serializers.ModelSerializer):
     class Meta:

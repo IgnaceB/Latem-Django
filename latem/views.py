@@ -138,14 +138,27 @@ def param(request):
 
 def dashboard(request):
 	if request.user.is_superuser :
+
 		myId=request.session["id_user"]
 		me=USERS().readOne(myId)
 		newDevis=DEVIS().getNewDevis()
 		myDevis=DEVIS().getMyDevis(myId)
 		otherDevis=DEVIS().getOtherDevis(myId)
+		print(newDevis)
 		return render(request,'dashboard.html',{'newDevis': newDevis, 'myDevis':myDevis, 'otherDevis':otherDevis, 'me':me})
 	else : 
 		redirect('home')
+
+def archives(request):
+	if request.user.is_superuser :
+
+		myId=request.session["id_user"]
+		me=USERS().readOne(myId)
+		archives=DEVIS().getArchivedDevis()
+		return render(request,'archives.html',{'archives': archives,})
+	else : 
+		redirect('home')
+
 
 def log_in(request):
 	if request.method == 'POST':
@@ -227,159 +240,188 @@ def signup(request):
 		return render(request,'signup.html')
 
 def devis(request,id):
-	print(request.POST)
-	if request.method=='POST' :
+	if request.user.is_superuser :
+		if request.method=='POST' :
 
-	# request pour modifier le contenu d'une ligne de description
-		match request.POST.get('formulaire_id') :
-			case 'modifyDescription' :
-				form = updateDescriptionForm(request.POST)
-				if form.is_valid():
-					print(form.cleaned_data)
-					try : 
-						LIGNES_DESC_DEVIS().update(objectId=form.cleaned_data['id'],data={'id':form.cleaned_data['id'],'textCustom':form.cleaned_data['textCustom']})
-					except Exception as error :
-						raise(error)
+		# request pour modifier le contenu d'une ligne de description
+			match request.POST.get('formulaire_id') :
+				case 'modifyDescription' :
+					form = updateDescriptionForm(request.POST)
+					if form.is_valid():
+						print(form.cleaned_data)
+						try : 
+							LIGNES_DESC_DEVIS().update(objectId=form.cleaned_data['id'],data={'id':form.cleaned_data['id'],'textCustom':form.cleaned_data['textCustom']})
+						except Exception as error :
+							raise(error)
 
-		# request pour ajouter une ligne de description avec un customText dans le devis	
-			case 'addDescription':
-				form = addDescriptionForm(request.POST)
-				if form.is_valid():
-					print(form.cleaned_data)
-					try : 
-						LIGNES_DESC_DEVIS().create(data=form.cleaned_data)
-					except Exception as error :
-						print(error)
-						raise(error)
+			# request pour ajouter une ligne de description avec un customText dans le devis	
+				case 'addDescription':
+					form = addDescriptionForm(request.POST)
+					if form.is_valid():
+						print(form.cleaned_data)
+						try : 
+							LIGNES_DESC_DEVIS().create(data=form.cleaned_data)
+						except Exception as error :
+							print(error)
+							raise(error)
 
 
-		# request pour supprimer une ligne de description
-			case 'deleteDescription' :
-				form = descriptionSuppressionForm(request.POST)
-				if form.is_valid():
-					try : 
-						LIGNES_DESC_DEVIS().delete(form.cleaned_data['id'])
-					except Exception as error :
-						print(error)
-						raise(error)
+			# request pour supprimer une ligne de description
+				case 'deleteDescription' :
+					form = descriptionSuppressionForm(request.POST)
+					if form.is_valid():
+						try : 
+							LIGNES_DESC_DEVIS().delete(form.cleaned_data['id'])
+						except Exception as error :
+							print(error)
+							raise(error)
 
-		# requset pour supprimer un item et l'ensemble de ces descriptions
-			case 'deleteItem' :
-				form = itemSuppressionForm(request.POST)
-				if form.is_valid():
-					
-					try : 
-						LIGNES_ITEMS_DEVIS().delete(form.cleaned_data['id'])
-					except Exception as error :
-						print(error)
-						raise(error)
-
-		# requset pour update un item => textCustom
-			case 'updateStatus' :
-				
-				form = updateDevisStatusForm(request.POST)
-				if form.is_valid():
-					print(form.cleaned_data)
-					try : 
-						DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
-					except Exception as error :
-						print(error)
-						raise(error)
-
-		# requset pour modifier la quantité d'un item 			
-			case 'updateQuantity' :
-				
-				form = updateQuantityForm(request.POST)
-				if form.is_valid():
-					
-					try : 
-						LIGNES_ITEMS_DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
-					except Exception as error :
-						print(error)
-						raise(error)
-		# requset pour modifier la quantité d'un item 			
-			case 'addItem' :
-				
-				form = createLineItemForm(request.POST)
-				if form.is_valid():
-					
-					try : 
-						LIGNES_ITEMS_DEVIS().create(data=form.cleaned_data)
-					except Exception as error :
-						print(error)
-						raise(error)
-		# requset pour modifier la quantité d'un item 			
-			case 'deleteDevis' :
-				
-				form = deleteDevisForm(request.POST)
-
-				if form.is_valid():
-					print('deletedevis')
-					try : 
-						DEVIS().delete(form.cleaned_data['id'])
-					except Exception as error :
+			# requset pour supprimer un item et l'ensemble de ces descriptions
+				case 'deleteItem' :
+					form = itemSuppressionForm(request.POST)
+					if form.is_valid():
 						
-						raise(error)
-					return redirect('dashboard')
-			case 'sendEmail':
-				message = Mail(
-				from_email='from_email@example.com',
-				to_emails='to@example.com',
-				subject='Sending with Twilio SendGrid is Fun',
-				html_content='<strong>and easy to do anywhere, even with Python</strong>')
-				try:
-					sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-					response = sg.send(message)
-					print(response.status_code)
-					print(response.body)
-					print(response.headers)
-				except Exception as e:
-					print(e.message)
-			case 'dropbox' :
-				dataset = DEVIS().initDevis(id)
-				try :
-				
-					dbx = dropbox.Dropbox(env('DROPBOX_ACCESS_TOKEN'))
-					folder_name = f'devis{id}'
+						try : 
+							LIGNES_ITEMS_DEVIS().delete(form.cleaned_data['id'])
+						except Exception as error :
+							print(error)
+							raise(error)
 
+			# requset pour update un item => textCustom
+				case 'updateStatus' :
+					
+					form = updateDevisStatusForm(request.POST)
+					if form.is_valid():
+						print(form.cleaned_data)
+						try : 
+							DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
+						except Exception as error :
+							print(error)
+							raise(error)
+
+			# requset pour modifier la quantité d'un item 			
+				case 'updateQuantity' :
+					
+					form = updateQuantityForm(request.POST)
+					if form.is_valid():
+						
+						try : 
+							LIGNES_ITEMS_DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
+						except Exception as error :
+							print(error)
+							raise(error)
+			# requset pour modifier la quantité d'un item 			
+				case 'addItem' :
+					
+					form = createLineItemForm(request.POST)
+					if form.is_valid():
+						
+						try : 
+							LIGNES_ITEMS_DEVIS().create(data=form.cleaned_data)
+						except Exception as error :
+							print(error)
+							raise(error)
+			# requset pour modifier la quantité d'un item 			
+				case 'deleteDevis' :
+					
+					form = deleteDevisForm(request.POST)
+
+					if form.is_valid():
+						print('deletedevis')
+						try : 
+							DEVIS().delete(form.cleaned_data['id'])
+						except Exception as error :
+							
+							raise(error)
+						return redirect('dashboard')
+				case 'sendEmail':
+					message = Mail(
+					from_email='from_email@example.com',
+					to_emails='to@example.com',
+					subject='Sending with Twilio SendGrid is Fun',
+					html_content='<strong>and easy to do anywhere, even with Python</strong>')
+					try:
+						sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+						response = sg.send(message)
+						print(response.status_code)
+						print(response.body)
+						print(response.headers)
+					except Exception as e:
+						print(e.message)
+				case 'dropbox' :
+					dataset = DEVIS().initDevis(id)
 					try :
-						folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
-					except ApiError as e:
-						dbx.files_create_folder('/' + folder_name)
-						print(f"API error: {e}")
+						print(env('DROPBOX_REFRESH_TOKEN'))
+						params = {
+						'grant_type': 'refresh_token',
+						'refresh_token': env('DROPBOX_REFRESH_TOKEN'),
+						'client_id': env('DROPBOX_KEY').strip(),
+						'client_secret': env('DROPBOX_SECRET'),
+						}
+						print(params)
+						# CODE A GARDER, RECUPERE REFRESH TOKEN A L'AIDE DU CODE GENERE SUR : 
+						# https://www.dropbox.com/oauth2/authorize?client_id=<API_ACCESS_KEY>&token_access_type=offline&response_type=code
+						# url = "https://api.dropbox.com/oauth2/token"
+						# data = {
+						#     'grant_type': 'authorization_code',
+						#     'code': 'Vvzmc0OTWPMAAAAAAAFa1dpap8NNT8Nf0cdN05UG0Uk',
+						#     'client_id': env('DROPBOX_KEY').strip(),
+						#     'client_secret': env('DROPBOX_SECRET'),
 
-					link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
-					print(link)
-					dropboxUrl = link.url[:len(link.url)-5]
-					print(dropboxUrl)
-					return render(request,'devis.html', {'data' :dataset, 
-					'forms':{
-					'updateDescriptionForm' : updateDescriptionForm, 
-					'descriptionSuppressionForm': descriptionSuppressionForm,
-					'addDescriptionForm':addDescriptionForm, 
-					'updateDevisStatusForm':updateDevisStatusForm,
-					'updateQuantityForm':updateQuantityForm,
-					'createLineItemForm':createLineItemForm,
-					'deleteDevisForm':deleteDevisForm,
-					}, 'dropboxUrl':dropboxUrl,})
+						# }
 
-				except AuthError as e:
-					print(f"Authentication error: {e}")
+						# response = requests.post(url, data=data)
+						# access_token = response.json()["access_token"]
+						# refresh_token = response.json()["refresh_token"]
+						# print(f'refresh : {refresh_token}')
+
+						response = requests.post('https://api.dropbox.com/oauth2/token', data=params)
+						response_data = response.json()
+						print(response_data)
+						access_token=response_data["access_token"]
+						dbx = dropbox.Dropbox(access_token)
+						folder_name = f'devis{id}'
+
+						try :
+							folder_metadata=dbx.files_get_metadata(f'/{folder_name}')
+						except ApiError as e:
+							dbx.files_create_folder('/' + folder_name)
+							print(f"API error: {e}")
+
+						link = dbx.sharing_create_shared_link(path=f'/{folder_name}', short_url=False)
+						
+						dropboxUrl = link.url[:len(link.url)-5]
+						
+						return render(request,'devis.html', {'data' :dataset, 
+						'forms':{
+						'updateDescriptionForm' : updateDescriptionForm, 
+						'descriptionSuppressionForm': descriptionSuppressionForm,
+						'addDescriptionForm':addDescriptionForm, 
+						'updateDevisStatusForm':updateDevisStatusForm,
+						'updateQuantityForm':updateQuantityForm,
+						'createLineItemForm':createLineItemForm,
+						'deleteDevisForm':deleteDevisForm,
+						}, 'dropboxUrl':dropboxUrl,})
+
+					except AuthError as e:
+						print(f"Authentication error: {e}")
 
 
-				
-	dataset = DEVIS().initDevis(id)
-	
-	return render(request,'devis.html', {'data' :dataset, 
-		'forms':{
-		'updateDescriptionForm' : updateDescriptionForm, 
-		'descriptionSuppressionForm': descriptionSuppressionForm,
-		'addDescriptionForm':addDescriptionForm, 
-		'updateDevisStatusForm':updateDevisStatusForm,
-		'updateQuantityForm':updateQuantityForm,
-		'createLineItemForm':createLineItemForm,
-		'deleteDevisForm':deleteDevisForm,
-		}, 'dropboxUrl':'',})
+					
+		dataset = DEVIS().initDevis(id)
+		
+		return render(request,'devis.html', {'data' :dataset, 
+			'forms':{
+			'updateDescriptionForm' : updateDescriptionForm, 
+			'descriptionSuppressionForm': descriptionSuppressionForm,
+			'addDescriptionForm':addDescriptionForm, 
+			'updateDevisStatusForm':updateDevisStatusForm,
+			'updateQuantityForm':updateQuantityForm,
+			'createLineItemForm':createLineItemForm,
+			'deleteDevisForm':deleteDevisForm,
+			}, 'dropboxUrl':'',})
+	else : 
+		return redirect('home')
 
 
 def configurateur(request):

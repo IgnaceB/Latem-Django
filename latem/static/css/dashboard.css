@@ -74,6 +74,10 @@ h1, h2, h3 {
   color: #333;
 }
 
+h2 {
+  margin: 0;
+}
+
 #container {
   margin-right: 3vw;
   margin-left: 3vw;
@@ -82,7 +86,7 @@ h1, h2, h3 {
 #container section table {
   border-collapse: collapse;
   width: 100%;
-  margin: 0;
+  margin: 20px 0;
 }
 
 #container section th, #container section td {
@@ -134,6 +138,11 @@ h1, h2, h3 {
   margin-top: 10px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#container .subNav a {
+  margin: 10px 0;
 }
 
 footer {

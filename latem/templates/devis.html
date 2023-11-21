@@ -210,27 +210,44 @@
     <table border="1">
         <tr>
             <th>ID du client</th>
-            <th>Nom du client</th>
-            <th>Email du client</th>
+            <td>{{data.client.id}}</td>
         </tr>
+            <tr>
+            <th>Nom</th>
+            <td>{{ data.client.firstName }} {{ data.client.lastName }}</td>
+        </tr>
+                <tr>
+            <th>Email</th>
+            <td>{{data.client.email}}</td>
+        </tr>
+                <tr>
+            <th>Téléphone</th>
+            <td>{{data.client.telephone}}</td>
+        </tr>
+    </table>
+    <table class=responsable>
         <tr>
-            <td data-client-id>{{ data.client.id }}</td>
-            <td data-client-name>{{ data.client.firstName }} {{ data.client.lastName }}</td>
-            <td data-client-email>{{ data.client.email }}</td>
+            <th>Responsable</th>
+            <td data-status class='inputContainer'>
+                <select name="responsable" id='responsable'>
+                    <option value=""></option>
+                    <option value="" {% if 240 == data.devis.responsableId %}selected{% endif %}>Yan</option>
+                    <option value="243" {% if 243 == data.devis.responsableId %}selected{% endif %} >Kilian</option>
+                    <option value="" {% if 241 == data.devis.responsableId %}selected{% endif %}>Jonas</option>
+            </select>
+            </td>
         </tr>
     </table>
 </section>
         <div class="subNav">
-        <a href="{% url 'dashboard' %}">
-            <button>Dashboard</button></a>
-    <a href="" target="_blank"><button>envoyer email</button></a>
-</div>
-    <form id='dropbox' method='POST'>
+         <form id='dropbox' method='POST'>
         {% csrf_token %}
         <input type="hidden" name="formulaire_id" id="id_formulaire_id" value='dropbox'>
     <button>Dropbox</button></a>
 </form>
+    <a href="" target="_blank"><button>Envoyer</button></a>
 </div>
+   
     <form id='suppressionForms' method='POST'>
         {% csrf_token %}
     {{forms.descriptionSuppressionForm}}
@@ -270,6 +287,7 @@
     {{forms.deleteDevisForm}}
 <input type="submit" style='display:none'>
 </form>
+</div>
 </body>
 
 <footer>
