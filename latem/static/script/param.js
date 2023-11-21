@@ -269,8 +269,7 @@ const deleteFinit=()=>{
 
 
 		let inputId = section.querySelector('#id_id')
-		console.log(inputId)
-		console.log(section)
+	
 		inputId.value=selectedDescription.id
 
 }

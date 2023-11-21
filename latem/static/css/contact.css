@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+.wrapper {
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  width: 100vw;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  overflow: hidden;
+}
+
+header {
+  height: 40vw;
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+header .logo img {
+  max-width: 100%;
+  max-height: 130px;
+}
+
+header nav {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  left: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  background: black;
+  width: 100%;
+}
+
+header nav ul {
+  display: flex;
+  margin: 10px;
+}
+
+header nav ul li {
+  width: 30%;
+  height: 3vh;
+}
+
+header nav ul li svg {
+  height: 100%;
+}
+
+#slider {
+  display: none;
+  justify-content: flex-end;
+}
+
+#slider .arrow {
+  width: 30px;
+  margin: 0px;
+  padding: 0;
+  background-color: black;
+  border-radius: 5px 0px 0px 5px;
+}
+
+#slider .arrow svg {
+  height: 100%;
+  color: white;
+  width: 100%;
+}
+
+#slider .qui {
+  width: 100%;
+  border: black solid 2px;
+  margin-right: -30%;
+  padding: 10px;
+  display: flex;
+  padding-right: 30%;
+}
+
+#slider .qui h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.real {
+  width: 100%;
+  height: 100%;
+}
+
+.real img {
+  width: 100%;
+  height: 100%;
+}
+
+.real .slider {
+  width: auto;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.real .slider h3 {
+  font-weight: 600;
+  text-align: center;
+  font-size: 16px;
+  margin: 0;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 30px;
+}
+
+footer {
+  height: 10vh;
+  width: 100vw;
+}
+
+.carousel {
+  background: white;
+  height: 43vh;
+  margin-right: 3vw;
+  margin-left: 3vw;
+}
+
+.carousel-cell {
+  width: 66%;
+  height: 100%;
+  margin-right: 20px;
+  background: white;
+  border-radius: 5px;
+  counter-increment: carousel-cell;
+}
+
+.carousel flickity-enabled is-draggable {
+  height: 43vh;
+  margin-right: 3vw;
+  margin-left: 3vw;
+  background: white;
+}
+
+.devis div {
+  margin: 3vw;
+  background: #f9f9f9;
+  padding: 1px 15px;
+}
+
+.devis div .button {
+  width: auto;
+  background: white;
+  text-align: center;
+  border: 1px solid lightgray;
+}
+
+.about {
+  margin-right: 3vw;
+  margin-left: 3vw;
+  margin-bottom: 6vh;
+}
+
+.about div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3vw;
+  background: #f9f9f9;
+  padding: 3vw;
+  align-items: center;
+}
+
+.about div img {
+  width: 150px;
+  height: 150px;
+}
+
+.about div div {
+  padding-top: 0;
+  display: block;
+  padding-left: 6vw;
+}
+
+.about div div h3 {
+  margin-top: 0;
+}
+
+.contact {
+  margin: 3vw;
+  overflow: scroll;
+}
+
+.contact .infos .container {
+  margin-bottom: 7vw;
+}
+
+.contact .infos .container iframe {
+  width: 100%;
+}
+
+.contact .infos .container svg {
+  width: 15VW;
+  height: 15vw;
+  margin-bottom: 7vw;
+  margin-left: 35vw;
+}
+
+.contact .infos .container p {
+  margin: 0;
+}
+
+.contact form {
+  margin-top: 20px;
+}
+
+.contact form input[type='submit'] {
+  width: auto;
+  background: white;
+  text-align: center;
+  border: 1px solid lightgray;
+}

@@ -42,7 +42,7 @@ def account(request):
 		allMyDevis=DEVIS().getMyCustomerDevis(myId)
 		dataset=[]
 		for devis in allMyDevis :
-			print(devis)
+			
 			dataset.append(DEVIS().initDevis(devis['id']))
 		return render(request, 'account.html', {'listOfData':dataset})
 	else :
@@ -108,7 +108,7 @@ def param(request):
 		elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteItem" :
 
 			form = itemSuppressionForm(request.POST)
-			print(form)
+			
 			if form.is_valid():
 				
 				ITEMS().delete(form.cleaned_data['id'])
@@ -119,7 +119,7 @@ def param(request):
 		elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteDescription" :
 			
 			form = descriptionSuppressionForm(request.POST)
-			print(form)
+			
 			if form.is_valid():
 				
 				DESCRIPTION_ITEMS().delete(form.cleaned_data['id'])
@@ -138,23 +138,23 @@ def param(request):
 
 def dashboard(request):
 	if request.user.is_superuser :
-		print(request.method)
+		
 		if request.method=='POST' and request.POST['formulaire_id'] == 'devis':
 			form = createDevisForm(request.POST)
 			if form.is_valid():
-				print(form.cleaned_data)
+				
 				try : 
 					DEVIS().create(data=form.cleaned_data)
-					print('successw')
+					
 				except Exception as error :
 					raise(error)
 		elif request.method=='POST' and request.POST['formulaire_id'] == 'client':
 			form = createClientForm(request.POST)
 			if form.is_valid():
-				print(form.cleaned_data)
+				
 				try : 
 					USERS().create(data=form.cleaned_data)
-					print('successclient')
+					
 				except Exception as error :
 					raise(error)
 		myId=request.session["id_user"]
@@ -270,7 +270,6 @@ def devis(request,id):
 				case 'modifyDescription' :
 					form = updateDescriptionForm(request.POST)
 					if form.is_valid():
-						print(form.cleaned_data)
 						try : 
 							LIGNES_DESC_DEVIS().update(objectId=form.cleaned_data['id'],data={'id':form.cleaned_data['id'],'textCustom':form.cleaned_data['textCustom']})
 						except Exception as error :
@@ -280,7 +279,6 @@ def devis(request,id):
 				case 'addDescription':
 					form = addDescriptionForm(request.POST)
 					if form.is_valid():
-						print(form.cleaned_data)
 						try : 
 							LIGNES_DESC_DEVIS().create(data=form.cleaned_data)
 						except Exception as error :
@@ -314,7 +312,6 @@ def devis(request,id):
 					
 					form = updateDevisStatusForm(request.POST)
 					if form.is_valid():
-						print(form.cleaned_data)
 						try : 
 							DEVIS().update(objectId=form.cleaned_data['id'],data=form.cleaned_data)
 						except Exception as error :
@@ -349,7 +346,7 @@ def devis(request,id):
 					form = deleteDevisForm(request.POST)
 
 					if form.is_valid():
-						print('deletedevis')
+						
 						try : 
 							DEVIS().delete(form.cleaned_data['id'])
 						except Exception as error :
@@ -357,30 +354,16 @@ def devis(request,id):
 							raise(error)
 						return redirect('dashboard')
 				case 'sendEmail':
-					message = Mail(
-					from_email='from_email@example.com',
-					to_emails='to@example.com',
-					subject='Sending with Twilio SendGrid is Fun',
-					html_content='<strong>and easy to do anywhere, even with Python</strong>')
-					try:
-						sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-						response = sg.send(message)
-						print(response.status_code)
-						print(response.body)
-						print(response.headers)
-					except Exception as e:
-						print(e.message)
+					print('email')
 				case 'dropbox' :
 					dataset = DEVIS().initDevis(id)
 					try :
-						print(env('DROPBOX_REFRESH_TOKEN'))
 						params = {
 						'grant_type': 'refresh_token',
 						'refresh_token': env('DROPBOX_REFRESH_TOKEN'),
 						'client_id': env('DROPBOX_KEY').strip(),
 						'client_secret': env('DROPBOX_SECRET'),
 						}
-						print(params)
 						# CODE A GARDER, RECUPERE REFRESH TOKEN A L'AIDE DU CODE GENERE SUR : 
 						# https://www.dropbox.com/oauth2/authorize?client_id=<API_ACCESS_KEY>&token_access_type=offline&response_type=code
 						# url = "https://api.dropbox.com/oauth2/token"
@@ -399,7 +382,6 @@ def devis(request,id):
 
 						response = requests.post('https://api.dropbox.com/oauth2/token', data=params)
 						response_data = response.json()
-						print(response_data)
 						access_token=response_data["access_token"]
 						dbx = dropbox.Dropbox(access_token)
 						folder_name = f'devis{id}'
@@ -445,6 +427,8 @@ def devis(request,id):
 	else : 
 		return redirect('home')
 
+def contact(request):
+	return render(request,'contact.html',{'contactForm':contactForm})
 
 def configurateur(request):
 	allItems = ITEMS().readAll()

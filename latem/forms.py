@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
+from django.core.validators import EmailValidator
 
 class UserCreationForm(UserCreationForm):
     class Meta:
@@ -34,7 +35,6 @@ class itemSuppressionForm(forms.Form):
 
 class addDescriptionForm(forms.Form):
     description_type = 'charac'
-    # parent_devis=forms.IntegerField(label="parent_devis", widget=forms.HiddenInput)
     LignesItemsDevisId=forms.IntegerField(label="parent_item_id", widget=forms.HiddenInput)
     textCustom=forms.CharField(label='textCustom', widget=forms.HiddenInput)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
@@ -90,3 +90,10 @@ class createClientForm(forms.Form):
 class createDevisForm(forms.Form):
     clientId = forms.CharField(label='id', widget=forms.HiddenInput)
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
+
+class contactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.CharField(validators=[EmailValidator()])
+    phone = forms.CharField(max_length=15)
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea)
