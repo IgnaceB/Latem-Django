@@ -138,14 +138,36 @@ def param(request):
 
 def dashboard(request):
 	if request.user.is_superuser :
-
+		print(request.method)
+		if request.method=='POST' and request.POST['formulaire_id'] == 'devis':
+			form = createDevisForm(request.POST)
+			if form.is_valid():
+				print(form.cleaned_data)
+				try : 
+					DEVIS().create(data=form.cleaned_data)
+					print('successw')
+				except Exception as error :
+					raise(error)
+		elif request.method=='POST' and request.POST['formulaire_id'] == 'client':
+			form = createClientForm(request.POST)
+			if form.is_valid():
+				print(form.cleaned_data)
+				try : 
+					USERS().create(data=form.cleaned_data)
+					print('successclient')
+				except Exception as error :
+					raise(error)
 		myId=request.session["id_user"]
 		me=USERS().readOne(myId)
 		newDevis=DEVIS().getNewDevis()
 		myDevis=DEVIS().getMyDevis(myId)
 		otherDevis=DEVIS().getOtherDevis(myId)
-		print(newDevis)
-		return render(request,'dashboard.html',{'newDevis': newDevis, 'myDevis':myDevis, 'otherDevis':otherDevis, 'me':me})
+		clients = USERS().readAll()
+		return render(request,'dashboard.html',{'clients':clients,'newDevis': newDevis, 'myDevis':myDevis, 'otherDevis':otherDevis, 'me':me,
+			'forms':{
+			'createClientForm' : createClientForm,
+			'createDevisForm' : createDevisForm,
+			}})
 	else : 
 		redirect('home')
 

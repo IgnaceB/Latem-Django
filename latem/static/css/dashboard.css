@@ -145,6 +145,104 @@ h2 {
   margin: 10px 0;
 }
 
+#container .subnav2 {
+  display: block;
+}
+
 footer {
   height: 10vh;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  z-index: 1000;
+  background: white;
+  border: gray solid 1px;
+  padding: 10px 10px 0 10px;
+  width: 80vw;
+  overflow: scroll;
+  max-height: 80vh;
+}
+
+.popup h2 {
+  margin-bottom: 10px;
+}
+
+.popup span {
+  margin: 0;
+  font-size: 35px;
+  padding: 0;
+  text-align: right;
+  cursor: pointer;
+}
+
+.popup input {
+  width: 100%;
+  padding: 10px;
+}
+
+.popup table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+
+.popup th, .popup td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  height: 5vh;
+}
+
+.popup td {
+  cursor: pointer;
+}
+
+.popup th {
+  background-color: #333;
+  color: white;
+}
+
+.popup tr:hover {
+  background-color: #f5f5f5;
+}
+
+form {
+  text-align: left;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  color: #333;
+}
+
+form input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+form input[type="submit"] {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: black;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+  background-color: grey;
 }

@@ -9,6 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+	 <script src="{% static 'script/dashboard.js' %}" defer></script>
+        {{clients|json_script}}
 	<title>Home</title>
 </head>
 {% if user.is_superuser %}
@@ -60,8 +62,42 @@
 			</nav>
 		</header>
 		<section id="container">
-		<h1>Dashboard</h1>
 		<h2>Bonjour {{ me.firstName }}</h2>
+		<div class="subNav subnav2" >
+			<a><button id='nouveauClient' onclick="openPopUp('clientPopup')">Nouveau Client</button></a>
+			<div id="clientPopup" class="popup" display=hidden>
+		        <div class="popup-content">
+					<form id='createClientForm' method='POST'>
+				    {% csrf_token %}
+				    {{forms.createClientForm}}
+					<input type="submit" value='Créer le client'>
+
+					</form>
+		            <span class="close" onclick="validatePopUp('clientPopup')">&times;</span>
+		        </div>
+		    </div>
+		<a><button id='nouveauDevis' onclick="openPopUp('devisPopup')">Nouveau Devis</button></a>
+			<div id="devisPopup" class="popup" display=hidden>
+		        <div class="popup-content">
+		            <h2>Liste des clients</h2>
+		            <input type='text' onkeypress="sortClients(this)" placeholder="filtrer">
+		            <p> Sélectionner le client : </p>
+		            <table id="clientTable">
+					 <thead>
+			            <tr>
+			                <th>Prénom</th>
+			                <th>Nom</th>
+			                <th>Email</th>
+			            </tr>
+			        </thead>
+			        <tbody id='clientList'>
+		                <!-- La liste des clients sera ajoutée ici dynamiquement avec JavaScript -->
+		            </tbody>
+		            </table>
+		            <span class="close" onclick="validatePopUp('devisPopup')">&times;</span>
+		        </div>
+		    </div>
+		</div>
 		<section class='nouveauxDevis'>
 			<h3> Nouveaux Devis </h3>
 			  
@@ -157,12 +193,18 @@
 		<a href="{% url 'param' %}">
 			<button>paramètres</button>
 		</a>
-		<a href="{% url 'logout' %}"><button>Nouveau Client</button></a>
-		<a href="{% url 'logout' %}"><button>Nouveau Devis</button></a>
+		
 		<a href="{% url 'archives' %}"><button>Archives</button></a>
 		<a href="{% url 'logout' %}"><button>Déconnexion</button></a>
 </div>
+	  	<form id='createDevisForm' method='POST'>
+	    {% csrf_token %}
+	    {{forms.createDevisForm}}
+		<input type="submit" style='display:none'>
+
+		</form>
 	</body>
+
 	<footer>
 	</footer>
 </div>	

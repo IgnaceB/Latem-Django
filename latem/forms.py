@@ -78,3 +78,15 @@ class sendEmailDevis(forms.Form):
     to_emails=forms.CharField(widget=forms.HiddenInput)
     subject='Sending with Twilio SendGrid is Fun'        
     html_content=forms.CharField(widget=forms.HiddenInput)
+
+class createClientForm(forms.Form):
+    firstName = forms.CharField(required=False, label='Prénom')
+    lastName = forms.CharField(required=False, label='Nom')
+    email = forms.CharField(label='Email')
+    formulaire_id = forms.CharField(widget=forms.HiddenInput,required=False)
+    telephone = forms.CharField(required=False,label='Téléphone')
+    isAdmin=False
+
+class createDevisForm(forms.Form):
+    clientId = forms.CharField(label='id', widget=forms.HiddenInput)
+    formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
