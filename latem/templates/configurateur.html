@@ -13,9 +13,8 @@
 	<script src="{% static 'script/configurateur.js' %}" defer></script>
 	{{ finitions | json_script}}
 
-	<title>Home</title>
+	<title>Editeur de devis</title>
 </head>
-{% if user.is_superuser %}
 <body>
 	<div class="wrapper">
 		<header>
@@ -63,15 +62,6 @@
 				</div>
 			</nav>
 		</header>
-		{% if formErrors %}
-    <div class="errors">
-        <ul>
-            {% for element in formErrors %}
-                <li>incorrect fields: {{element}}</li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
 		<section class="object" id='object'>
 			<h4>liste des objets existants</h4>
 			<select name="listElem" id="listElem" required>
@@ -164,9 +154,5 @@
 	<footer>
 	</footer>
 </div>	
-{% else %}
-<script>
-	window.location.href = "{% url 'home' %}";
-</script>
-{% endif %}
+
 </html>
