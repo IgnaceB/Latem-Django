@@ -14,6 +14,7 @@ import dropbox
 from dropbox.exceptions import AuthError, ApiError
 import logging
 
+from django.core.mail import send_mail
 # import cv2
 import requests
 import json
@@ -428,6 +429,36 @@ def devis(request,id):
 		return redirect('home')
 
 def contact(request):
+	if request.method=="POST":
+		form = contactForm(request.POST)
+		if form.is_valid():
+			print(form.cleaned_data)
+			# Process the form data
+		# 	send_mail(
+		#     form.cleaned_data['subject'],
+		#     f'<h6>{form.cleaned_data["email"]}</h6><hr/><p>{form.cleaned_data["message"]}</p>',
+		#     env('EMAIL_SENDER'),
+		#     ["ignaceberard@hotmail.com"],
+		#     fail_silently=False,
+		# )
+			message = Mail(
+		    from_email=env('EMAIL_SENDER'),
+		    to_emails='ignacebernard@hotmail.com',
+		    subject=form.cleaned_data['subject'],
+		    html_content = f'<h6>{form.cleaned_data["email"]}</h6><hr/><p>{form.cleaned_data["message"]}</p>')
+			try:
+				print(env('SENDGRID_API_KEY'))
+				print(message)
+				sg = SendGridAPIClient(env('SENDGRID_API_KEY'))
+				response = sg.send(message)
+				print(response.status_code)
+				print(response.body)
+				print(response.headers)
+			except Exception as e:
+				print("SendGrid API Error:", e)
+		else:
+			return HttpResponse(400)
+
 	return render(request,'contact.html',{'contactForm':contactForm})
 
 def configurateur(request):

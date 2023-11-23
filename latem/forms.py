@@ -92,8 +92,8 @@ class createDevisForm(forms.Form):
     formulaire_id = forms.CharField(widget=forms.HiddenInput, required=False)
 
 class contactForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    email = forms.CharField(validators=[EmailValidator()])
-    phone = forms.CharField(max_length=15)
-    subject = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(max_length=100, required=False, label='Nom')
+    email = forms.CharField(validators=[EmailValidator()],label='Email*')
+    phone = forms.CharField(max_length=15, required=False, label='Téléphone')
+    subject = forms.CharField(max_length=100, required=False, label='Sujet')
+    message = forms.CharField(widget=forms.Textarea, label='Message')

@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
-	<title>Home</title>
+	<title>Créer un compte</title>
 </head>
 <body>
 	<div class="wrapper">
@@ -68,7 +68,7 @@
    </script>
         {% endif %}
        <section class="signup-form">
-        <h2>Sign Up</h2>
+        <h2>Créer son compte</h2>
         <form method="post" >
            
             {% csrf_token %}
@@ -78,28 +78,28 @@
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="id_password1">Password:</label>
+                <label for="id_password1">Mot de passe:</label>
                 <input type="password" autocomplete="new-password" id="id_password1" name="password1" required>
             </div>
             <div class="form-group">
-                <label for="id_password2">Password confirmation:</label>
+                <label for="id_password2">Confirmation du mot de passe:</label>
                 <input type="password" autocomplete="new-password" id="id_password2" name="password2" required>
             </div>
             <div class="form-group">
-                <label for="firstName">firstName:</label>
+                <label for="firstName">Prénom:</label>
                 <input type="text" id="firstName" name="firstName" required>
             </div>
             <div class="form-group">
-                <label for="lastName">lastName:</label>
+                <label for="lastName">Nom:</label>
                 <input type="text" id="lastName" name="lastName" required>
             </div>
             <div class="form-group">
-                <label for="telephone">telephone:</label>
+                <label for="telephone">Téléphone:</label>
                 <input type="text" id="telephone" name="telephone">
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit">Créer mon compte</button>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+        <p>Déjà client ? <a href="{% url 'login' %}">Connexion</a></p>
     </section>
 
 
