@@ -502,3 +502,98 @@ def configurateur(request):
 			elif  desc_data['description_type']=='finitions':
 				finitionsDescriptions.append(desc_item)
 	return render(request, 'configurateur.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions,})
+
+
+def switch(request):
+
+	# retrieve all the data from the items and the description table
+	allItems = ITEMS().readAll()
+	allDescriptionData = DESCRIPTION_ITEMS().getAllOrderedByLevel()
+
+	# retrieve how many level of nested description exists
+	maxLevel=DESCRIPTION_ITEMS().getMaxLevel()
+	
+	characDescriptions = []
+	finitionsDescriptions= []
+	# generate an array characDescriptions with one array per level
+	if maxLevel:
+		for x in range(maxLevel+1):
+			characDescriptions.append([])
+
+	# fill characDescriptions[level] with all the existing descriptions at this level
+	if allDescriptionData :	
+		for desc_data in allDescriptionData:
+			desc_item= {
+			'id':desc_data['id'],
+			'name':desc_data['name'],
+			'description':desc_data['description'],
+			'apply_on_all_items':desc_data['apply_on_all_items'],
+			'parent_item':desc_data['parent_item'],
+			'description_type':desc_data['description_type'],
+			'parent_description':desc_data['parent_description'],
+			'level':desc_data['level'],
+			}
+			# make a switch to split charac and finitions
+			if desc_data['description_type']=='charac':
+				characDescriptions[desc_item['level']].append(desc_item)
+			elif  desc_data['description_type']=='finitions':
+				finitionsDescriptions.append(desc_item)
+	
+	# request to create a new description
+	if request.method=='POST' and 'parent_item' in request.POST:
+		form=descriptionCreationForm(request.POST)
+		if form.is_valid():
+		
+			tryCreate = DESCRIPTION_ITEMS().create(data=form.cleaned_data)
+			if tryCreate != 'ok':
+				
+				return render(request, 'switchfully.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+			'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : tryCreate,
+			'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})
+			
+			else : 
+				return redirect('switch')
+		else : 
+			return render(request, 'switchfully.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+			'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors,
+			'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,
+			})
+
+	elif request.method=='POST' and 'name' in request.POST:
+		form = ItemCreationForm(request.POST)
+		if form.is_valid():
+			ITEMS().create(data=form.cleaned_data)
+			return redirect('switch')
+		else : 
+			return render(request, 'switchfully.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+			'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm, 'formErrors' : form.errors,
+			'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})
+	
+	elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteItem" :
+
+		form = itemSuppressionForm(request.POST)
+		
+		if form.is_valid():
+			
+			ITEMS().delete(form.cleaned_data['id'])
+			return redirect('switch')
+		else : 
+			return HttpResponse("Invalid request or form not valid.")
+
+	elif request.method=='POST' and request.POST.get('formulaire_id')=="deleteDescription" :
+		
+		form = descriptionSuppressionForm(request.POST)
+		
+		if form.is_valid():
+			
+			DESCRIPTION_ITEMS().delete(form.cleaned_data['id'])
+			return redirect('switch')
+		else : 
+			return HttpResponse("Invalid request or form not valid.")
+
+
+	else : 
+	
+		return render(request, 'switchfully.html', {'items': allItems, 'description' : characDescriptions, 'finitions' : finitionsDescriptions, 
+			'ItemCreationForm': ItemCreationForm, 'descriptionCreationForm':descriptionCreationForm,
+			'itemSuppressionForm' : itemSuppressionForm, 'descriptionSuppressionForm': descriptionSuppressionForm,})

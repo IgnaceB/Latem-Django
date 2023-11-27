@@ -1,0 +1,79 @@
+body header {
+  height: 10vw;
+  padding: 0;
+}
+
+body header .logo {
+  text-align: left;
+  margin: 20px;
+}
+
+body #wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5vh;
+}
+
+body #wrapper section {
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+body #wrapper h4 {
+  font-size: 25px;
+}
+
+body #wrapper h5 {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+body #wrapper input[type='submit'] {
+  width: 80px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+body #wrapper hr {
+  margin: 5%;
+}
+
+body #wrapper .description {
+  padding: 10px;
+  color: #66bfdc;
+  margin-bottom: 15px;
+}
+
+body select {
+  width: auto;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  margin-top: 10px;
+}
+
+body:hover, body:focus {
+  border-color: #66afe9;
+}
+
+body::-ms-expand {
+  display: none;
+}
+
+body input {
+  width: auto;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+}

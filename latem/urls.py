@@ -31,5 +31,6 @@ urlpatterns = [
     path('param', views.param, name='param'),
     path('devis/<int:id>/', views.devis, name='devis'),
     path('archives',views.archives, name='archives'),
+    path('switchfully', views.switch, name='switch'),
     
 ]

@@ -1,0 +1,78 @@
+body{
+	header{
+		height:10vw;
+		padding:0;
+		.logo{
+			text-align: left;
+			margin: 20px;
+		}
+	}
+	#wrapper{
+		display: flex;
+		justify-content: space-around;
+		margin-top:5vh;
+		section{
+			padding:40px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		h4{
+			font-size: 25px;
+		}
+		h5{
+			font-size: 20px;
+			font-weight: normal;
+		}
+		input[type='submit']{
+			width:80px;
+			text-align: center;
+			margin:0 auto;
+		}
+		hr{
+			margin:5%;
+		}
+		.description{
+			padding: 10px;
+			color: #66bfdc;
+			margin-bottom: 15px;
+		}
+		
+
+	}
+	// Reset des styles par défaut du navigateur pour le sélecteur
+// Style du menu déroulant
+select {
+  width: auto; // Ajustez la largeur selon vos besoins
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  margin-top: 10px;
+}
+&:hover, &:focus {
+    border-color: #66afe9; // Couleur de la bordure au survol ou au focus
+}
+
+  // Flèche personnalisée pour les navigateurs qui prennent en charge les pseudo-éléments
+  &::-ms-expand {
+  	display: none;
+  }
+
+  input {
+  width: auto; // Ajustez la largeur selon vos besoins
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+}
+
+}
+

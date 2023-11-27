@@ -8,7 +8,7 @@ const getAttribute=(container,selection)=>{
 	let selector = document.getElementById(selection)
 	selector.addEventListener("change",event=>{
 		selectedOption=selector.options[selector.options.selectedIndex]
-		descriptionContainer.innerText=`Description : ${selectedOption.getAttribute("description")}`
+		descriptionContainer.innerText=`${selectedOption.getAttribute("description")}`
 	})
 
 }	
@@ -99,7 +99,7 @@ const displayNextList=()=>{
 					listCharacSelect.addEventListener('change', function(){
 						let listSelectElem=listCharacSelect.options[listCharacSelect.selectedIndex]
 						let descriptionContainer = document.getElementById('characDescription')
-						descriptionContainer.innerText=`Description : ${listSelectElem.getAttribute('description')}`
+						descriptionContainer.innerText=`${listSelectElem.getAttribute('description')}`
 					})
     // Écouter les changements de sélection dans le premier menu déroulant
 					previousListSelect.addEventListener("change", function () {
@@ -107,7 +107,7 @@ const displayNextList=()=>{
 						let selectedElemDescription = selectedElem.getAttribute("id");
 						//update description
 						let descriptionContainer = document.getElementById('characDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
+						descriptionContainer.innerText=`${selectedElem.getAttribute('description')}`
         // Nettoyer le deuxième menu déroulant
 						listCharacSelect.innerHTML = "";
 
@@ -175,7 +175,7 @@ displayNextListFinit=()=>{
 
 					//update description
 						let descriptionContainer = document.getElementById('finitionDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
+						descriptionContainer.innerText=`${selectedElem.getAttribute('description')}`
         // Nettoyer le deuxième menu déroulant
 						listFinitSelect.innerHTML = "";
 
@@ -204,7 +204,7 @@ displayNextListFinit=()=>{
 					listFinitSelect.addEventListener('change',event=>{
 						let selectedElem = listFinitSelect.options[listFinitSelect.selectedIndex];
 						let descriptionContainer = document.getElementById('finitionDescription')
-						descriptionContainer.innerText=`Description : ${selectedElem.getAttribute('description')}`
+						descriptionContainer.innerText=`${selectedElem.getAttribute('description')}`
 					})
 }
 displayNextListFinit()
