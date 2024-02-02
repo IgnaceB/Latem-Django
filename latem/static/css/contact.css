@@ -1,17 +1,14 @@
 * {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 a {
   all: unset;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .wrapper {
   overflow: scroll;
   width: 100vw;
-  height: 100vh;
-}
+  height: 100vh; }
 
 body {
   width: 100vw;
@@ -20,8 +17,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background-color: white;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 header {
   height: 40vw;
@@ -31,151 +27,106 @@ header {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-header .logo {
-  width: 100%;
-  height: auto;
-  text-align: center;
-}
-
-header .logo img {
-  max-width: 100%;
-  max-height: 130px;
-}
-
-header nav {
-  position: fixed;
-  padding: 0;
-  margin: 0;
-  left: 0px;
-  bottom: 0px;
-  z-index: 1000;
-  background: black;
-  width: 100%;
-}
-
-header nav ul {
-  display: flex;
-  margin: 10px;
-}
-
-header nav ul li {
-  width: 30%;
-  height: 3vh;
-}
-
-header nav ul li svg {
-  height: 100%;
-}
+  align-items: center; }
+  header .logo {
+    width: 100%;
+    height: auto;
+    text-align: center; }
+    header .logo img {
+      max-width: 100%;
+      max-height: 130px; }
+  header nav {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    left: 0px;
+    bottom: 0px;
+    z-index: 1000;
+    background: black;
+    width: 100%; }
+    header nav ul {
+      display: flex;
+      margin: 10px; }
+      header nav ul li {
+        width: 30%;
+        height: 3vh; }
+        header nav ul li svg {
+          height: 100%; }
 
 footer {
   height: 10vh;
-  width: 100vw;
-}
+  width: 100vw; }
 
 .contact {
   margin: 3vw;
-  overflow: scroll;
-}
+  overflow: scroll; }
+  .contact .infos .container {
+    margin-bottom: 7vw;
+    padding: 0 10px; }
+    .contact .infos .container iframe {
+      width: 100%; }
+    .contact .infos .container svg {
+      width: 15VW;
+      height: 15vw;
+      margin-bottom: 7vw;
+      margin-left: 50%;
+      transform: translateX(-7.5vw); }
+    .contact .infos .container p {
+      margin: 0; }
+    .contact .infos .container form {
+      text-align: left; }
+    .contact .infos .container .form-group {
+      margin-bottom: 20px; }
+    .contact .infos .container label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333; }
+    .contact .infos .container textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 5px; }
+    .contact .infos .container h6 {
+      margin: 0px; }
+    .contact .infos .container input[type="text"],
+    .contact .infos .container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 5px; }
+    .contact .infos .container input[type="submit"] {
+      padding: 10px 20px;
+      background-color: black;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s; }
+    .contact .infos .container input[type="submit"]:hover {
+      background-color: grey; }
+    .contact .infos .container .telephone p {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 5px; }
+      .contact .infos .container .telephone p span {
+        padding: 5px 0; }
+      .contact .infos .container .telephone p span:first-child {
+        font-weight: bold; }
+  .contact form input[type='submit'] {
+    width: auto;
+    background: white;
+    text-align: center;
+    border: 1px solid lightgray; }
 
-.contact .infos .container {
-  margin-bottom: 7vw;
-  padding: 0 10px;
-}
-
-.contact .infos .container iframe {
-  width: 100%;
-}
-
-.contact .infos .container svg {
-  width: 15VW;
-  height: 15vw;
-  margin-bottom: 7vw;
-  margin-left: 47vw;
-  transform: translateX(-7.5vw);
-}
-
-.contact .infos .container p {
-  margin: 0;
-}
-
-.contact .infos .container form {
-  text-align: left;
-}
-
-.contact .infos .container .form-group {
-  margin-bottom: 20px;
-}
-
-.contact .infos .container label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.contact .infos .container textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.contact .infos .container h6 {
-  margin: 0px;
-}
-
-.contact .infos .container input[type="text"],
-.contact .infos .container input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.contact .infos .container input[type="submit"] {
-  padding: 10px 20px;
-  background-color: black;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-}
-
-.contact .infos .container input[type="submit"]:hover {
-  background-color: grey;
-}
-
-.contact .infos .container .telephone p {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.contact .infos .container .telephone p span {
-  padding: 5px 0;
-}
-
-.contact .infos .container .telephone p span:first-child {
-  font-weight: bold;
-}
-
-.contact form input[type='submit'] {
-  width: auto;
-  background: white;
-  text-align: center;
-  border: 1px solid lightgray;
-}
+/*# sourceMappingURL=contact.css.map */

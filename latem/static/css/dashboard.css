@@ -1,17 +1,14 @@
 * {
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 a {
   all: unset;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .wrapper {
   overflow: scroll;
   width: 100vw;
-  height: 100vh;
-}
+  height: 100vh; }
 
 body {
   width: 100vw;
@@ -20,8 +17,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background-color: white;
-  overflow: hidden;
-}
+  overflow: hidden; }
 
 header {
   height: 40vw;
@@ -31,127 +27,86 @@ header {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-header .logo {
-  width: 100%;
-  height: auto;
-  text-align: center;
-}
-
-header .logo img {
-  max-width: 100%;
-  max-height: 130px;
-}
-
-header nav {
-  position: fixed;
-  padding: 0;
-  margin: 0;
-  left: 0px;
-  bottom: 0px;
-  z-index: 1000;
-  background: black;
-  width: 100%;
-}
-
-header nav ul {
-  display: flex;
-  margin: 10px;
-}
-
-header nav ul li {
-  width: 30%;
-  height: 3vh;
-}
-
-header nav ul li svg {
-  height: 100%;
-}
+  align-items: center; }
+  header .logo {
+    width: 100%;
+    height: auto;
+    text-align: center; }
+    header .logo img {
+      max-width: 100%;
+      max-height: 130px; }
+  header nav {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    left: 0px;
+    bottom: 0px;
+    z-index: 1000;
+    background: black;
+    width: 100%; }
+    header nav ul {
+      display: flex;
+      margin: 10px; }
+      header nav ul li {
+        width: 30%;
+        height: 3vh; }
+        header nav ul li svg {
+          height: 100%; }
 
 h1, h2, h3 {
-  color: #333;
-}
+  color: #333; }
 
 h2 {
-  margin: 0;
-}
+  margin: 0; }
 
 #container {
   margin-right: 3vw;
-  margin-left: 3vw;
-}
-
-#container section table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 20px 0;
-}
-
-#container section th, #container section td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-  height: 5vh;
-}
-
-#container section th svg, #container section td svg {
-  height: 100%;
-}
-
-#container section th {
-  background-color: #333;
-  color: white;
-}
-
-#container section tr:hover {
-  background-color: #f5f5f5;
-}
-
-#container section a {
-  text-decoration: none;
-  color: #333;
-}
-
-#container section a:hover {
-  text-decoration: underline;
-}
-
-#container button {
-  padding: 10px 20px;
-  background-color: black;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-#container button:hover {
-  background-color: grey;
-}
-
-#container .subNav {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-#container .subNav a {
-  margin: 10px 0;
-}
-
-#container .subnav2 {
-  display: block;
-}
+  margin-left: 3vw; }
+  #container section table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0; }
+  #container section th, #container section td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    height: 5vh; }
+    #container section th svg, #container section td svg {
+      height: 100%; }
+  #container section th {
+    background-color: #333;
+    color: white; }
+  #container section tr:hover {
+    background-color: #f5f5f5; }
+  #container section a {
+    text-decoration: none;
+    color: #333; }
+  #container section a:hover {
+    text-decoration: underline; }
+  #container button {
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; }
+  #container button:hover {
+    background-color: grey; }
+  #container .subNav {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; }
+    #container .subNav a {
+      margin: 10px 0; }
+  #container .subnav2 {
+    display: block; }
 
 footer {
-  height: 10vh;
-}
+  height: 10vh; }
 
 .popup {
   display: none;
@@ -164,85 +119,61 @@ footer {
   padding: 10px 10px 0 10px;
   width: 80vw;
   overflow: scroll;
-  max-height: 80vh;
-}
-
-.popup h2 {
-  margin-bottom: 10px;
-}
-
-.popup span {
-  margin: 0;
-  font-size: 35px;
-  padding: 0;
-  text-align: right;
-  cursor: pointer;
-}
-
-.popup input {
-  width: 100%;
-  padding: 10px;
-}
-
-.popup table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 20px 0 0 0;
-}
-
-.popup th, .popup td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-  height: 5vh;
-}
-
-.popup td {
-  cursor: pointer;
-}
-
-.popup th {
-  background-color: #333;
-  color: white;
-}
-
-.popup tr:hover {
-  background-color: #f5f5f5;
-}
+  max-height: 80vh; }
+  .popup h2 {
+    margin-bottom: 10px; }
+  .popup span {
+    margin: 0;
+    font-size: 35px;
+    padding: 0;
+    text-align: right;
+    cursor: pointer; }
+  .popup input {
+    width: 100%;
+    padding: 10px; }
+  .popup table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0 0 0; }
+  .popup th, .popup td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    height: 5vh; }
+  .popup td {
+    cursor: pointer; }
+  .popup th {
+    background-color: #333;
+    color: white; }
+  .popup tr:hover {
+    background-color: #f5f5f5; }
 
 form {
-  text-align: left;
-}
+  text-align: left; }
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    color: #333; }
+  form input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px; }
+  form input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: black;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; }
+  form input[type="submit"]:hover {
+    background-color: grey; }
 
-form label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  color: #333;
-}
-
-form input {
-  width: 90%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-form input[type="submit"] {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: black;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-form input[type="submit"]:hover {
-  background-color: grey;
-}
+/*# sourceMappingURL=dashboard.css.map */

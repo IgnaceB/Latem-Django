@@ -2,16 +2,14 @@
   background-color: #ff6b6b;
   color: white;
   padding: 10px;
-  margin-bottom: 20px;
-}
+  margin-bottom: 20px; }
 
 .object,
 .charac,
 .finition {
   background-color: #fff;
   padding: 0px;
-  margin: 0px 20px 0;
-}
+  margin: 0px 20px 0; }
 
 select,
 input,
@@ -20,8 +18,7 @@ button {
   padding: 3px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-}
+  font-size: 16px; }
 
 button[type="submit"] {
   background-color: black;
@@ -31,25 +28,22 @@ button[type="submit"] {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
+  transition: background-color 0.3s; }
 
 button[type="submit"]:hover {
-  background-color: grey;
-}
+  background-color: grey; }
 
 h4,
 h5 {
   margin-bottom: 5px;
   color: #333;
-  margin-top: 5px;
-}
+  margin-top: 5px; }
 
 form {
   display: flex;
-  flex-direction: column;
-}
+  flex-direction: column; }
 
 hr {
-  width: 90%;
-}
+  width: 90%; }
+
+/*# sourceMappingURL=param.css.map */
